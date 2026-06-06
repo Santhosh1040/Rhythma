@@ -1,20 +1,6 @@
-# Python
-
-**pycache**/
-*.py[cod]
-*.pyo
-*.pyd
-*.egg-info/
-venv/
-.env
-
-# FastAPI
-
-.env.local
-.env.production
-
-# Flutter
-
+# =========================
+# FLUTTER CORE
+# =========================
 .dart_tool/
 .flutter-plugins
 .flutter-plugins-dependencies
@@ -23,53 +9,85 @@ venv/
 .pub/
 build/
 
-# Android
-
+# =========================
+# ANDROID
+# =========================
 android/.gradle/
 android/app/debug/
 android/app/profile/
 android/app/release/
+android/local.properties
 
-# iOS
-
+# =========================
+# IOS
+# =========================
 ios/Pods/
 ios/.symlinks/
 ios/Flutter/Flutter.framework
 ios/Flutter/App.framework
+ios/Flutter/Generated.xcconfig
+ios/Flutter/flutter_export_environment.sh
 
-# Firebase
+# =========================
+# WEB
+# =========================
+.web/
 
+# =========================
+# WINDOWS / LINUX / MACOS
+# =========================
+windows/flutter/ephemeral/
+linux/flutter/ephemeral/
+macos/Flutter/ephemeral/
+
+# =========================
+# PYTHON (if used in tooling)
+# =========================
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg-info/
+venv/
+.env
+
+# =========================
+# FASTAPI / BACKEND ENV (if used)
+# =========================
+.env.local
+.env.production
+
+# =========================
+# FIREBASE / BACKEND CONFIG
+# =========================
 google-services.json
 GoogleService-Info.plist
+credentials.json
+secrets.json
 
-# IDE
-
+# =========================
+# IDE / EDITORS
+# =========================
 .vscode/
 .idea/
+*.iml
 
-# OS Files
-
+# =========================
+# OS FILES
+# =========================
 .DS_Store
 Thumbs.db
 
-# Logs
-
+# =========================
+# LOGS
+# =========================
 *.log
 
-# Secrets
-
-.env
-.env.*
-secrets.json
-credentials.json
-
-# Generated files
-
-dist/
-coverage/
-
-# Temporary files
-
+# =========================
+# TEMP / CACHE
+# =========================
 tmp/
 temp/
 *.tmp
+coverage/
+dist/
