@@ -23,20 +23,20 @@ class GlassCard extends StatelessWidget {
     final card = ClipRRect(
       borderRadius: BorderRadius.circular(r),
       child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
+        filter: ImageFilter.blur(sigmaX: 28, sigmaY: 28),
         child: Container(
           decoration: BoxDecoration(
-            color: RhythmaColors.surface.withOpacity(0.75),
+            color: RhythmaColors.surface.withValues(alpha: 0.55),
             borderRadius: BorderRadius.circular(r),
             border: Border.all(
-              color: RhythmaColors.lavender.withOpacity(0.4),
-              width: 1,
+              color: RhythmaColors.lavender.withValues(alpha: 0.28),
+              width: 0.8,
             ),
             boxShadow: [
               BoxShadow(
-                color: RhythmaColors.primary.withOpacity(0.08),
-                blurRadius: 24,
-                offset: const Offset(0, 4),
+                color: RhythmaColors.primary.withValues(alpha: 0.05),
+                blurRadius: 28,
+                offset: const Offset(0, 6),
               ),
             ],
           ),
@@ -81,7 +81,7 @@ class GradientBox extends StatelessWidget {
         borderRadius: BorderRadius.circular(borderRadius),
         boxShadow: [
           BoxShadow(
-            color: RhythmaColors.primary.withOpacity(0.28),
+            color: RhythmaColors.primary.withValues(alpha: 0.28),
             blurRadius: 40,
             offset: const Offset(0, 10),
           ),
@@ -111,7 +111,7 @@ class TintedIcon extends StatelessWidget {
       width: size,
       height: size,
       decoration: BoxDecoration(
-        color: color.withOpacity(0.15),
+        color: color.withValues(alpha: 0.15),
         borderRadius: BorderRadius.circular(size * 0.35),
       ),
       child: Icon(icon, color: color, size: size * 0.5),

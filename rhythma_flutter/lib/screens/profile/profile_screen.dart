@@ -9,11 +9,83 @@ class ProfileScreen extends StatefulWidget {
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> {
+class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProviderStateMixin {
   String _userName = 'Aarya';
   int _userAge = 28;
   int _cycleLength = 28;
-  int _mhsAverage = 85;
+  final int _mhsAverage = 85;
+  final int _cycleDay = 12;
+
+  late final AnimationController _controller;
+  late final Animation<double> _headerFade;
+  late final Animation<Offset> _headerSlide;
+  late final Animation<double> _statsFade;
+  late final Animation<Offset> _statsSlide;
+  late final Animation<double> _menuFade;
+  late final Animation<Offset> _menuSlide;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 900),
+    );
+
+    _headerFade = Tween<double>(begin: 0, end: 1).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: const Interval(0.0, 0.5, curve: Curves.easeOut),
+      ),
+    );
+    _headerSlide = Tween<Offset>(begin: const Offset(0, 0.08), end: Offset.zero).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: const Interval(0.0, 0.5, curve: Curves.easeOutCubic),
+      ),
+    );
+
+    _statsFade = Tween<double>(begin: 0, end: 1).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: const Interval(0.2, 0.7, curve: Curves.easeOut),
+      ),
+    );
+    _statsSlide = Tween<Offset>(begin: const Offset(0, 0.08), end: Offset.zero).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: const Interval(0.2, 0.7, curve: Curves.easeOutCubic),
+      ),
+    );
+
+    _menuFade = Tween<double>(begin: 0, end: 1).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: const Interval(0.4, 0.9, curve: Curves.easeOut),
+      ),
+    );
+    _menuSlide = Tween<Offset>(begin: const Offset(0, 0.08), end: Offset.zero).animate(
+      CurvedAnimation(
+        parent: _controller,
+        curve: const Interval(0.4, 0.9, curve: Curves.easeOutCubic),
+      ),
+    );
+
+    _controller.forward();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  String _getCyclePhase(int day) {
+    if (day <= 5) return 'Menstrual Phase';
+    if (day <= 13) return 'Follicular Phase';
+    if (day == 14) return 'Ovulation Phase';
+    return 'Luteal Phase';
+  }
 
   void _showEditProfileSheet() {
     final nameController = TextEditingController(text: _userName);
@@ -93,7 +165,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
             child: CircleAvatar(
               radius: 48,
-              backgroundColor: RhythmaColors.primary.withOpacity(0.1),
+              backgroundColor: RhythmaColors.primary.withValues(alpha: 0.1),
               child: const Icon(
                 Icons.person_rounded,
                 size: 48,
@@ -118,8 +190,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
           decoration: BoxDecoration(
-            color: RhythmaColors.teal.withOpacity(0.1),
+            color: RhythmaColors.teal.withValues(alpha: 0.1),
             borderRadius: BorderRadius.circular(16),
+            border: Border.all(
+              color: RhythmaColors.teal.withValues(alpha: 0.25),
+              width: 0.8,
+            ),
           ),
           child: Row(
             mainAxisSize: MainAxisSize.min,
@@ -127,7 +203,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               const Icon(Icons.water_drop, color: RhythmaColors.teal, size: 16),
               const SizedBox(width: 4),
               Text(
-                'Active Cycle',
+                'Cycle Day $_cycleDay • ${_getCyclePhase(_cycleDay)}',
                 style: Theme.of(context).textTheme.labelSmall?.copyWith(
                       color: RhythmaColors.teal,
                     ),
@@ -139,51 +215,100 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
+  Widget _buildStatCard({
+    required IconData icon,
+    required Color color,
+    required String value,
+    required String label,
+  }) {
+    return GlassCard(
+      padding: const EdgeInsets.all(12),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              TintedIcon(icon: icon, color: color, size: 28),
+              Icon(
+                Icons.trending_flat_rounded,
+                color: color.withValues(alpha: 0.6),
+                size: 16,
+              ),
+            ],
+          ),
+          const SizedBox(height: 16),
+          Text(
+            value,
+            style: const TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.w800,
+              color: RhythmaColors.foreground,
+              height: 1.1,
+            ),
+          ),
+          const SizedBox(height: 2),
+          Text(
+            label,
+            style: const TextStyle(
+              fontSize: 10,
+              fontWeight: FontWeight.w600,
+              color: RhythmaColors.mutedFg,
+              height: 1.1,
+            ),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget _buildStatsCards() {
-    return Row(
+    return Column(
       children: [
-        Expanded(
-          child: GlassCard(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const TintedIcon(icon: Icons.calendar_month, color: RhythmaColors.rose, size: 32),
-                const SizedBox(height: 12),
-                Text(
-                  '$_cycleLength Days',
-                  style: Theme.of(context).textTheme.titleLarge,
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  'Avg Cycle Length',
-                  style: Theme.of(context).textTheme.labelSmall,
-                ),
-              ],
+        Row(
+          children: [
+            Expanded(
+              child: _buildStatCard(
+                icon: Icons.calendar_month_rounded,
+                color: RhythmaColors.rose,
+                value: '$_cycleLength days',
+                label: 'Avg Cycle Length',
+              ),
             ),
-          ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: _buildStatCard(
+                icon: Icons.psychology_rounded,
+                color: RhythmaColors.teal,
+                value: '$_mhsAverage',
+                label: 'Avg Mental Health',
+              ),
+            ),
+          ],
         ),
-        const SizedBox(width: 16),
-        Expanded(
-          child: GlassCard(
-            padding: const EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const TintedIcon(icon: Icons.psychology, color: RhythmaColors.teal, size: 32),
-                const SizedBox(height: 12),
-                Text(
-                  '$_mhsAverage',
-                  style: Theme.of(context).textTheme.titleLarge,
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  'Avg Mental Health',
-                  style: Theme.of(context).textTheme.labelSmall,
-                ),
-              ],
+        const SizedBox(height: 12),
+        Row(
+          children: [
+            Expanded(
+              child: _buildStatCard(
+                icon: Icons.insights_rounded,
+                color: RhythmaColors.coral,
+                value: '±1.2 days',
+                label: 'Cycle Variability',
+              ),
             ),
-          ),
+            const SizedBox(width: 12),
+            Expanded(
+              child: _buildStatCard(
+                icon: Icons.history_toggle_off_rounded,
+                color: RhythmaColors.primary,
+                value: '27 days',
+                label: 'Last Cycle Length',
+              ),
+            ),
+          ],
         ),
       ],
     );
@@ -248,22 +373,54 @@ class _ProfileScreenState extends State<ProfileScreen> {
       body: ListView(
         padding: const EdgeInsets.all(20).copyWith(bottom: 100, top: 24),
         children: [
-          Text(
-            'Profile',
-            style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                  fontSize: 22,
-                  fontWeight: FontWeight.w700,
-                ),
-            textAlign: TextAlign.center,
+          FadeTransition(
+            opacity: _headerFade,
+            child: SlideTransition(
+              position: _headerSlide,
+              child: Column(
+                children: [
+                  Text(
+                    'Profile',
+                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                          fontSize: 22,
+                          fontWeight: FontWeight.w700,
+                        ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 32),
+                  _buildHeader(),
+                ],
+              ),
+            ),
           ),
           const SizedBox(height: 32),
-          _buildHeader(),
+          FadeTransition(
+            opacity: _statsFade,
+            child: SlideTransition(
+              position: _statsSlide,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  const SectionHeader(title: 'Quick Stats'),
+                  _buildStatsCards(),
+                ],
+              ),
+            ),
+          ),
           const SizedBox(height: 32),
-          const SectionHeader(title: 'Quick Stats'),
-          _buildStatsCards(),
-          const SizedBox(height: 32),
-          const SectionHeader(title: 'Account Settings'),
-          _buildActionMenu(),
+          FadeTransition(
+            opacity: _menuFade,
+            child: SlideTransition(
+              position: _menuSlide,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  const SectionHeader(title: 'Account Settings'),
+                  _buildActionMenu(),
+                ],
+              ),
+            ),
+          ),
         ],
       ),
     );
