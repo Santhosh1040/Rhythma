@@ -7,6 +7,7 @@ import 'screens/home/home_screen.dart';
 import 'screens/cycle/cycle_screen.dart';
 import 'screens/assistant/assistant_screen.dart';
 import 'screens/insights/insights_screen.dart';
+import 'screens/profile/profile_screen.dart';
 import 'services/local_storage_service.dart';
 
 Future<void> main() async {
@@ -60,7 +61,7 @@ class _RhythmaShellState extends State<RhythmaShell> {
     CycleScreen(),
     AssistantScreen(),
     InsightsScreen(),
-    _ProfilePlaceholder(),
+    ProfileScreen(),
   ];
 
   @override
@@ -87,40 +88,6 @@ class _RhythmaShellState extends State<RhythmaShell> {
           currentIndex: _currentIndex,
           onTap: (i) => setState(() => _currentIndex = i),
         ),
-      ),
-    );
-  }
-}
-
-class _ProfilePlaceholder extends StatelessWidget {
-  const _ProfilePlaceholder();
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Container(
-            width: 72,
-            height: 72,
-            decoration: BoxDecoration(
-              gradient: RhythmaGradients.primary,
-              shape: BoxShape.circle,
-            ),
-            child: const Icon(Icons.person_rounded,
-                color: Colors.white, size: 36),
-          ),
-          const SizedBox(height: 14),
-          const Text('Aarya',
-              style: TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.w700,
-                  color: RhythmaColors.foreground)),
-          const SizedBox(height: 6),
-          Text('Profile coming soon',
-              style: TextStyle(fontSize: 14, color: RhythmaColors.mutedFg)),
-        ],
       ),
     );
   }
