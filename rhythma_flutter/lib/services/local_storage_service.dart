@@ -13,6 +13,11 @@ class _Keys {
 class LocalStorageService {
   static bool _initialised = false;
 
+  // Test mocks to bypass Hive lock conflicts during unit/widget tests
+  static bool isTesting = false;
+  static Map<String, dynamic>? mockProfile;
+  static List<Map<String, String>> mockEmergencyContacts = [];
+
   /// Call once at app startup (after WidgetsFlutterBinding.ensureInitialized)
   static Future<void> init() async {
     if (_initialised) return;
@@ -74,16 +79,50 @@ class LocalStorageService {
   static Box<Map> get _userBox => Hive.box<Map>(_Keys.userBox);
 
   static Map<String, dynamic>? getProfile() {
+    if (isTesting) return mockProfile;
     final raw = _userBox.get('profile');
     return raw != null ? Map<String, dynamic>.from(raw) : null;
   }
 
-  static Future<void> saveProfile(Map<String, dynamic> profile) =>
-      _userBox.put('profile', profile);
+  static Future<void> saveProfile(Map<String, dynamic> profile) async {
+    if (isTesting) {
+      mockProfile = profile;
+      return;
+    }
+    await _userBox.put('profile', profile);
+  }
+
+  // ── Emergency Contacts ────────────────────────────────────────────────────
+
+  /// Returns a list of saved emergency contacts.
+  static List<Map<String, String>> getEmergencyContacts() {
+    if (isTesting) return mockEmergencyContacts;
+    final raw = _settings.get('emergency_contacts');
+    if (raw != null) {
+      return List<Map<String, String>>.from(
+        (raw as List).map((e) => Map<String, String>.from(e as Map)),
+      );
+    }
+    return [];
+  }
+
+  /// Save the list of emergency contacts.
+  static Future<void> saveEmergencyContacts(List<Map<String, String>> contacts) async {
+    if (isTesting) {
+      mockEmergencyContacts = contacts;
+      return;
+    }
+    await _settings.put('emergency_contacts', contacts);
+  }
 
   // ── Clear all data ────────────────────────────────────────────────────────
 
   static Future<void> clearAll() async {
+    if (isTesting) {
+      mockProfile = null;
+      mockEmergencyContacts = [];
+      return;
+    }
     await _cycleBox.clear();
     await _settings.clear();
     await _userBox.clear();
