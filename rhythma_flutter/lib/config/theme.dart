@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 /// Rhythma design tokens — mirrors the web CSS :root variables exactly.
 class RhythmaColors {
-  // Primary — Soft Lavender  (oklch 0.62 0.13 305 ≈ #8B5CF6 adjusted)
-  static const Color primary = Color(0xFF9B72CF);
-  static const Color primaryFg = Color(0xFFFCFAFF);
-  static const Color lavender = Color(0xFFD8C8F0);
+  // Primary
+  static Color primary = const Color(0xFF9B72CF);
+  static Color primaryFg = const Color(0xFFFCFAFF);
+  static Color lavender = const Color(0xFFD8C8F0);
 
   // Rose Pink  (oklch 0.72 0.14 350 ≈)
   static const Color rose = Color(0xFFE07AAD);
@@ -20,33 +20,68 @@ class RhythmaColors {
   static const Color coralFg = Color(0xFFFCFAFF);
 
   // Backgrounds
-  static const Color background = Color(0xFFFDF8FF);
-  static const Color surface = Color(0xFFFFFFFF);
-  static const Color surfaceMuted = Color(0xFFF5F0FA);
+  static Color background = const Color(0xFFFDF8FF);
+  static Color backgroundEnd = const Color(0xFFF8EEF8);
+  static Color surface = const Color(0xFFFFFFFF);
+  static Color surfaceMuted = const Color(0xFFF5F0FA);
 
   // Foreground
-  static const Color foreground = Color(0xFF2D1F47);
-  static const Color mutedFg = Color(0xFF7A6E8A);
+  static Color foreground = const Color(0xFF2D1F47);
+  static Color mutedFg = const Color(0xFF7A6E8A);
 
   // Border
-  static const Color border = Color(0xFFE8DFF5);
+  static Color border = const Color(0xFFE8DFF5);
 
   // Glass card helper — used many places
   static Color get glassCard => surface.withOpacity(0.75);
   static Color get glassBorder => lavender.withOpacity(0.4);
+
+  static void updateTheme(bool isDark, Color selectedPrimary) {
+    if (isDark) {
+      // In dark mode, keep the background dark but use the selected primary color
+      primary = selectedPrimary;
+      primaryFg = const Color(0xFFFCFAFF);
+      lavender = selectedPrimary.withOpacity(0.3);
+
+      background = const Color(0xFF121212);
+      backgroundEnd = const Color(0xFF1E1E1E);
+      surface = const Color(0xFF1E1E1E);
+      surfaceMuted = const Color(0xFF2C2C2C);
+      foreground = const Color(0xFFFDF8FF);
+      mutedFg = const Color(0xFFAAA4B0);
+      border = const Color(0xFF333333);
+    } else {
+      // In light mode, apply the custom primary color
+      primary = selectedPrimary;
+      primaryFg = selectedPrimary.computeLuminance() > 0.5 
+          ? const Color(0xFF2D1F47) 
+          : const Color(0xFFFCFAFF);
+      lavender = selectedPrimary.withOpacity(0.3);
+
+      // Adapt the background to the chosen color
+      background = Color.alphaBlend(selectedPrimary.withOpacity(0.04), const Color(0xFFFFFFFF));
+      backgroundEnd = Color.alphaBlend(selectedPrimary.withOpacity(0.10), const Color(0xFFFFFFFF));
+      surface = const Color(0xFFFFFFFF);
+      surfaceMuted = Color.alphaBlend(selectedPrimary.withOpacity(0.07), const Color(0xFFFFFFFF));
+      
+      foreground = const Color(0xFF2D1F47);
+      mutedFg = const Color(0xFF7A6E8A);
+      border = Color.alphaBlend(selectedPrimary.withOpacity(0.15), const Color(0xFFFFFFFF));
+    }
+  }
 }
 
 class RhythmaGradients {
-  static const LinearGradient primary = LinearGradient(
+  static LinearGradient get primary => LinearGradient(
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
     colors: [RhythmaColors.primary, RhythmaColors.rose],
   );
 
-  static const LinearGradient bg = LinearGradient(
+  static LinearGradient get bg => LinearGradient(
     begin: Alignment.topCenter,
     end: Alignment.bottomCenter,
-    colors: [Color(0xFFFDF8FF), Color(0xFFF8EEF8)],
+    colors: [RhythmaColors.background, RhythmaColors.backgroundEnd],
   );
 
   static LinearGradient tinted(Color color) => LinearGradient(
@@ -75,7 +110,7 @@ class RhythmaTheme {
           onBackground: RhythmaColors.foreground,
         ),
         scaffoldBackgroundColor: Colors.transparent,
-        appBarTheme: const AppBarTheme(
+        appBarTheme: AppBarTheme(
           backgroundColor: Colors.transparent,
           elevation: 0,
           scrolledUnderElevation: 0,
@@ -87,7 +122,7 @@ class RhythmaTheme {
             fontFamily: 'Nunito',
           ),
         ),
-        textTheme: const TextTheme(
+        textTheme: TextTheme(
           displayLarge: TextStyle(
             fontSize: 28,
             fontWeight: FontWeight.w700,
@@ -146,9 +181,9 @@ class RhythmaTheme {
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(16),
             borderSide:
-                const BorderSide(color: RhythmaColors.primary, width: 1.5),
+                BorderSide(color: RhythmaColors.primary, width: 1.5),
           ),
-          hintStyle: const TextStyle(
+          hintStyle: TextStyle(
             color: RhythmaColors.mutedFg,
             fontSize: 14,
           ),

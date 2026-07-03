@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../components/shared.dart';
 import '../../config/theme.dart';
 import '../../services/local_storage_service.dart';
 import '../settings/settings_screen.dart';
+import 'package:rhythma/l10n/app_localizations.dart';
+import '../../providers/theme_provider.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -125,7 +128,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
             bottom: MediaQuery.of(context).viewInsets.bottom,
           ),
           child: Container(
-            decoration: const BoxDecoration(
+            decoration: BoxDecoration(
               color: RhythmaColors.surface,
               borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
             ),
@@ -134,12 +137,12 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                const SectionHeader(title: 'Edit Profile'),
+                SectionHeader(title: AppLocalizations.of(context)!.profileEditProfile),
                 const SizedBox(height: 16),
                 TextField(
                   controller: nameController,
                   decoration: InputDecoration(
-                    labelText: 'Name',
+                    labelText: AppLocalizations.of(context)!.profileName,
                     errorText: nameError,
                   ),
                 ),
@@ -147,7 +150,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                 TextField(
                   controller: ageController,
                   decoration: InputDecoration(
-                    labelText: 'Age',
+                    labelText: AppLocalizations.of(context)!.profileAge,
                     errorText: ageError,
                   ),
                   keyboardType: TextInputType.number,
@@ -156,7 +159,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                 TextField(
                   controller: cycleController,
                   decoration: InputDecoration(
-                    labelText: 'Average Cycle Length (Days)',
+                    labelText: AppLocalizations.of(context)!.profileAvgCycleDays,
                     errorText: cycleError,
                   ),
                   keyboardType: TextInputType.number,
@@ -209,7 +212,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                       }
                     }
                   },
-                  child: const Text('Save Changes'),
+                  child: Text(AppLocalizations.of(context)!.profileSaveChanges),
                 ),
                 const SizedBox(height: 16),
               ],
@@ -233,14 +236,14 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
       builder: (context) => StatefulBuilder(
         builder: (context, setDialogState) => AlertDialog(
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-          title: Text(editIndex == null ? 'Add Contact' : 'Edit Contact'),
+          title: Text(editIndex == null ? AppLocalizations.of(context)!.profileAddContact : AppLocalizations.of(context)!.profileEditContact),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               TextField(
                 controller: nameController,
                 decoration: InputDecoration(
-                  labelText: 'Name',
+                  labelText: AppLocalizations.of(context)!.profileName,
                   errorText: nameError,
                 ),
               ),
@@ -248,7 +251,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
               TextField(
                 controller: phoneController,
                 decoration: InputDecoration(
-                  labelText: 'Phone',
+                  labelText: AppLocalizations.of(context)!.profilePhone,
                   errorText: phoneError,
                 ),
                 keyboardType: TextInputType.phone,
@@ -258,7 +261,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text('Cancel'),
+              child: Text(AppLocalizations.of(context)!.cancel),
             ),
             ElevatedButton(
               onPressed: () async {
@@ -294,7 +297,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                   }
                 }
               },
-              child: const Text('Save'),
+              child: Text(AppLocalizations.of(context)!.profileSave),
             ),
           ],
         ),
@@ -316,7 +319,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
               bottom: MediaQuery.of(context).viewInsets.bottom,
             ),
             child: Container(
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 color: RhythmaColors.surface,
                 borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
               ),
@@ -326,8 +329,8 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   SectionHeader(
-                    title: 'Emergency Contacts',
-                    action: 'Add New',
+                    title: AppLocalizations.of(context)!.profileEmergencyContactsTitle,
+                    action: AppLocalizations.of(context)!.profileAddNew,
                     onAction: () {
                       _showAddEditContactDialog(null, setSheetState);
                     },
@@ -337,7 +340,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 32),
                       child: Text(
-                        'No emergency contacts set up yet.',
+                        AppLocalizations.of(context)!.profileNoContacts,
                         textAlign: TextAlign.center,
                         style: TextStyle(color: RhythmaColors.mutedFg),
                       ),
@@ -347,7 +350,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                       child: ListView.separated(
                         shrinkWrap: true,
                         itemCount: contacts.length,
-                        separatorBuilder: (context, index) => const Divider(
+                        separatorBuilder: (context, index) => Divider(
                           height: 1,
                           color: RhythmaColors.border,
                         ),
@@ -355,14 +358,14 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                           final contact = contacts[index];
                           return ListTile(
                             contentPadding: EdgeInsets.zero,
-                            leading: const TintedIcon(
+                            leading: TintedIcon(
                               icon: Icons.contact_phone_rounded,
                               color: RhythmaColors.rose,
                               size: 36,
                             ),
                             title: Text(
                               contact['name'] ?? '',
-                              style: const TextStyle(fontWeight: FontWeight.w600),
+                              style: TextStyle(fontWeight: FontWeight.w600),
                             ),
                             subtitle: Text(
                               contact['phone'] ?? '',
@@ -372,13 +375,13 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 IconButton(
-                                  icon: const Icon(Icons.edit_rounded, size: 20),
+                                  icon: Icon(Icons.edit_rounded, size: 20),
                                   onPressed: () {
                                     _showAddEditContactDialog(index, setSheetState);
                                   },
                                 ),
                                 IconButton(
-                                  icon: const Icon(Icons.delete_outline_rounded,
+                                  icon: Icon(Icons.delete_outline_rounded,
                                       color: RhythmaColors.coral, size: 20),
                                   onPressed: () async {
                                     setSheetState(() {
@@ -414,14 +417,14 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
           ),
           child: Container(
             padding: const EdgeInsets.all(3),
-            decoration: const BoxDecoration(
+            decoration: BoxDecoration(
               shape: BoxShape.circle,
               color: RhythmaColors.background,
             ),
             child: CircleAvatar(
               radius: 48,
               backgroundColor: RhythmaColors.primary.withValues(alpha: 0.1),
-              child: const Icon(
+              child: Icon(
                 Icons.person_rounded,
                 size: 48,
                 color: RhythmaColors.primary,
@@ -436,7 +439,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
         ),
         const SizedBox(height: 4),
         Text(
-          '$_userAge years old',
+          '$_userAge ${AppLocalizations.of(context)!.profileYearsOld}',
           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                 color: RhythmaColors.mutedFg,
               ),
@@ -455,10 +458,10 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
           child: Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Icon(Icons.water_drop, color: RhythmaColors.teal, size: 16),
+              Icon(Icons.water_drop, color: RhythmaColors.teal, size: 16),
               const SizedBox(width: 4),
               Text(
-                'Cycle Day $_cycleDay • ${_getCyclePhase(_cycleDay)}',
+                '${AppLocalizations.of(context)!.profileCycleDay} $_cycleDay • ${_getCyclePhase(_cycleDay)}',
                 style: Theme.of(context).textTheme.labelSmall?.copyWith(
                       color: RhythmaColors.teal,
                     ),
@@ -495,7 +498,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
           const SizedBox(height: 16),
           Text(
             value,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.w800,
               color: RhythmaColors.foreground,
@@ -505,7 +508,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
           const SizedBox(height: 2),
           Text(
             label,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 10,
               fontWeight: FontWeight.w600,
               color: RhythmaColors.mutedFg,
@@ -528,8 +531,8 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
               child: _buildStatCard(
                 icon: Icons.calendar_month_rounded,
                 color: RhythmaColors.rose,
-                value: '$_cycleLength days',
-                label: 'Avg Cycle Length',
+                value: '$_cycleLength ${AppLocalizations.of(context)!.homeDaysLabel}',
+                label: AppLocalizations.of(context)!.profileAvgCycleLength,
               ),
             ),
             const SizedBox(width: 12),
@@ -538,7 +541,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
                 icon: Icons.psychology_rounded,
                 color: RhythmaColors.teal,
                 value: '$_mhsAverage',
-                label: 'Avg Mental Health',
+                label: AppLocalizations.of(context)!.profileAvgMentalHealth,
               ),
             ),
           ],
@@ -550,8 +553,8 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
               child: _buildStatCard(
                 icon: Icons.insights_rounded,
                 color: RhythmaColors.coral,
-                value: '±1.2 days',
-                label: 'Cycle Variability',
+                value: '±1.2 ${AppLocalizations.of(context)!.homeDaysLabel}',
+                label: AppLocalizations.of(context)!.profileCycleVariability,
               ),
             ),
             const SizedBox(width: 12),
@@ -559,8 +562,8 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
               child: _buildStatCard(
                 icon: Icons.history_toggle_off_rounded,
                 color: RhythmaColors.primary,
-                value: '27 days',
-                label: 'Last Cycle Length',
+                value: '27 ${AppLocalizations.of(context)!.homeDaysLabel}',
+                label: AppLocalizations.of(context)!.profileLastCycleLength,
               ),
             ),
           ],
@@ -577,21 +580,21 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
           _buildActionTile(
             icon: Icons.edit_rounded,
             color: RhythmaColors.primary,
-            title: 'Edit Profile Information',
+            title: AppLocalizations.of(context)!.profileEditInfo,
             onTap: _showEditProfileSheet,
           ),
-          const Divider(height: 1, color: RhythmaColors.border),
+          Divider(height: 1, color: RhythmaColors.border),
           _buildActionTile(
             icon: Icons.emergency_rounded,
             color: RhythmaColors.rose,
-            title: 'Medical Emergency Contact',
+            title: AppLocalizations.of(context)!.profileEmergencyContact,
             onTap: _showEmergencyContactsSheet,
           ),
-          const Divider(height: 1, color: RhythmaColors.border),
+          Divider(height: 1, color: RhythmaColors.border),
           _buildActionTile(
             icon: Icons.settings_rounded,
             color: RhythmaColors.foreground,
-            title: 'App Settings',
+            title: AppLocalizations.of(context)!.profileAppSettings,
             onTap: () {
               Navigator.push(
                 context,
@@ -617,7 +620,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
     return ListTile(
       leading: TintedIcon(icon: icon, color: color, size: 36),
       title: Text(title, style: Theme.of(context).textTheme.bodyLarge),
-      trailing: const Icon(Icons.chevron_right_rounded, color: RhythmaColors.mutedFg),
+      trailing: Icon(Icons.chevron_right_rounded, color: RhythmaColors.mutedFg),
       onTap: onTap,
       contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
     );
@@ -625,6 +628,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
 
   @override
   Widget build(BuildContext context) {
+    context.watch<ThemeProvider>();
     return Scaffold(
       body: ListView(
         padding: const EdgeInsets.all(20).copyWith(bottom: 100, top: 24),
@@ -636,7 +640,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
               child: Column(
                 children: [
                   Text(
-                    'Profile',
+                    AppLocalizations.of(context)!.profileTitle,
                     style: Theme.of(context).textTheme.titleLarge?.copyWith(
                           fontSize: 22,
                           fontWeight: FontWeight.w700,
@@ -657,7 +661,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  const SectionHeader(title: 'Quick Stats'),
+                  SectionHeader(title: AppLocalizations.of(context)!.profileQuickStats),
                   _buildStatsCards(),
                 ],
               ),
@@ -671,7 +675,7 @@ class _ProfileScreenState extends State<ProfileScreen> with SingleTickerProvider
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  const SectionHeader(title: 'Account Settings'),
+                  SectionHeader(title: AppLocalizations.of(context)!.profileAccountSettings),
                   _buildActionMenu(),
                 ],
               ),

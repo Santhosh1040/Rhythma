@@ -1,0 +1,385 @@
+// ignore: unused_import
+import 'package:intl/intl.dart' as intl;
+import 'app_localizations.dart';
+
+// ignore_for_file: type=lint
+
+/// The translations for English (`en`).
+class AppLocalizationsEn extends AppLocalizations {
+  AppLocalizationsEn([String locale = 'en']) : super(locale);
+
+  @override
+  String get appTitle => 'Rhythma';
+
+  @override
+  String get settingsTitle => 'Settings';
+
+  @override
+  String get appPreferences => 'App Preferences';
+
+  @override
+  String get languagePreferences => 'Language Preferences';
+
+  @override
+  String get darkMode => 'Dark Mode';
+
+  @override
+  String get themeToggle => 'Theme toggle';
+
+  @override
+  String get notificationsTitle => 'Notifications';
+
+  @override
+  String get cycleTrackingReminders => 'Cycle Tracking Reminders';
+
+  @override
+  String get medicineAlerts => 'Medicine Alerts';
+
+  @override
+  String get wellnessTips => 'Wellness Tips';
+
+  @override
+  String get securityPrivacyTitle => 'Security & Privacy';
+
+  @override
+  String get appPermissions => 'App Permissions';
+
+  @override
+  String get privacyPolicy => 'Privacy Policy';
+
+  @override
+  String get logOut => 'Log Out';
+
+  @override
+  String get logoutConfirmation =>
+      'Are you sure you want to log out of Rhythma?';
+
+  @override
+  String get cancel => 'Cancel';
+
+  @override
+  String get loggedOutSuccess => 'Logged out successfully';
+
+  @override
+  String get selectLanguage => 'Select Language';
+
+  @override
+  String get homeGreeting => 'Namaste, Aarya';
+
+  @override
+  String get homePhaseDesc => 'Day 14 · Ovulation phase';
+
+  @override
+  String get homeNextPeriod => 'NEXT PERIOD IN';
+
+  @override
+  String get homeDaysLabel => 'days';
+
+  @override
+  String get homeFertileWindow => 'Fertile window · ';
+
+  @override
+  String get homeHighEnergy => 'High energy';
+
+  @override
+  String get homeAiTitle => 'RHYTHMA AI';
+
+  @override
+  String get homeAiSubtitle =>
+      'Ask me anything about your body,\nin your language.';
+
+  @override
+  String get homeAiPrompt => 'Why are my periods irregular?';
+
+  @override
+  String get homeFeelingTitle => 'How are you feeling today?';
+
+  @override
+  String get homeLogAll => 'Log all';
+
+  @override
+  String get homeLogFlow => 'Flow';
+
+  @override
+  String get homeLogMood => 'Mood';
+
+  @override
+  String get homeLogSleep => 'Sleep';
+
+  @override
+  String get homeLogStress => 'Stress';
+
+  @override
+  String get homeWeeklyInsightLabel => 'WEEKLY INSIGHT';
+
+  @override
+  String get homeWeeklyInsightTitle =>
+      'Your sleep improved 12% this week — your cycle may thank you.';
+
+  @override
+  String get homeWeeklyInsightDesc =>
+      'Consistent rest before ovulation supports hormonal balance.';
+
+  @override
+  String get homeLearnTitle => 'Learn with Rhythma';
+
+  @override
+  String get homeLearnPcos => 'Understanding PCOS';
+
+  @override
+  String get homeLearnHormones => 'Hormones 101';
+
+  @override
+  String get homeLearnIron => 'Iron-rich foods';
+
+  @override
+  String get homeArticle => 'ARTICLE';
+
+  @override
+  String get cycleTrackerTitle => 'Cycle Tracker';
+
+  @override
+  String get cyclePhasePeriod => 'Period';
+
+  @override
+  String get cyclePhaseFollicular => 'Follicular';
+
+  @override
+  String get cyclePhaseOvulation => 'Ovulation';
+
+  @override
+  String get cyclePhaseLuteal => 'Luteal';
+
+  @override
+  String get logFor => 'Log for';
+
+  @override
+  String get logNone => 'None';
+
+  @override
+  String get logLight => 'Light';
+
+  @override
+  String get logMedium => 'Medium';
+
+  @override
+  String get logHeavy => 'Heavy';
+
+  @override
+  String get logEnergyLow => 'Low';
+
+  @override
+  String get logEnergyMid => 'Mid';
+
+  @override
+  String get logEnergyHigh => 'High';
+
+  @override
+  String get logSleep1 => '<5h';
+
+  @override
+  String get logSleep2 => '5-7h';
+
+  @override
+  String get logSleep3 => '7-9h';
+
+  @override
+  String get logSleep4 => '9h+';
+
+  @override
+  String get logSympCramps => 'Cramps';
+
+  @override
+  String get logSympHeadache => 'Headache';
+
+  @override
+  String get logSympBloating => 'Bloating';
+
+  @override
+  String get logSympAcne => 'Acne';
+
+  @override
+  String get logLabelEnergy => 'Energy';
+
+  @override
+  String get logLabelSymptoms => 'Symptoms';
+
+  @override
+  String get assistantTitle => 'Rhythma Assistant';
+
+  @override
+  String get assistantSubtitle => 'Your private health companion';
+
+  @override
+  String get assistantInputHint => 'Ask anything about your health...';
+
+  @override
+  String get assistantWelcome =>
+      'Hi Aarya 🌸 I\'m Rhythma, your private health companion. Ask me anything about your cycle, symptoms, or wellbeing — in English, Hindi, Marathi, or Tamil.';
+
+  @override
+  String get assistantSug1 => 'Why are my periods irregular?';
+
+  @override
+  String get assistantSug2 => 'What causes severe cramps?';
+
+  @override
+  String get assistantSug3 => 'Is a 35-day cycle normal?';
+
+  @override
+  String get assistantSug4 => 'Foods that help with PMS';
+
+  @override
+  String get assistantSug5 => 'मेरे पीरियड्स अनियमित हैं — क्या यह सामान्य है?';
+
+  @override
+  String get insightsTitle => 'Health Insights';
+
+  @override
+  String get insightsSubtitle => 'Last 90 days';
+
+  @override
+  String get insightsMhsLabel => 'MENSTRUAL HEALTH SCORE';
+
+  @override
+  String get insightsMhsDelta => '+6 vs last cycle';
+
+  @override
+  String get insightsVar => 'Cycle Variability';
+
+  @override
+  String get insightsAvgCycle => 'Avg Cycle';
+
+  @override
+  String get insightsRegular => 'Regular';
+
+  @override
+  String get insightsModerate => 'Moderate';
+
+  @override
+  String get insightsTrendLabel => 'CYCLE LENGTH TREND';
+
+  @override
+  String get insightsStabilizing => 'Stabilizing';
+
+  @override
+  String get insightsHealthy => 'Healthy';
+
+  @override
+  String get insightsSymptomsLabel => 'Symptom patterns';
+
+  @override
+  String get insightsMoodSwings => 'Mood swings';
+
+  @override
+  String get insightsWellnessLabel => 'Wellness recommendations';
+
+  @override
+  String get insightsRec1 => 'Add iron-rich foods near period start';
+
+  @override
+  String get insightsRec2 => 'Try 10-minute yoga on luteal-phase days';
+
+  @override
+  String get insightsRec3 => 'Hydrate 2.5L during ovulation week';
+
+  @override
+  String get profileTitle => 'Profile';
+
+  @override
+  String get profileYearsOld => 'years old';
+
+  @override
+  String get profileCycleDay => 'Cycle Day';
+
+  @override
+  String get profileQuickStats => 'Quick Stats';
+
+  @override
+  String get profileAvgCycleLength => 'Avg Cycle Length';
+
+  @override
+  String get profileAvgMentalHealth => 'Avg Mental Health';
+
+  @override
+  String get profileCycleVariability => 'Cycle Variability';
+
+  @override
+  String get profileLastCycleLength => 'Last Cycle Length';
+
+  @override
+  String get profileAccountSettings => 'Account Settings';
+
+  @override
+  String get profileEditInfo => 'Edit Profile Information';
+
+  @override
+  String get profileEmergencyContact => 'Medical Emergency Contact';
+
+  @override
+  String get profileAppSettings => 'App Settings';
+
+  @override
+  String get profileEditProfile => 'Edit Profile';
+
+  @override
+  String get profileName => 'Name';
+
+  @override
+  String get profileAge => 'Age';
+
+  @override
+  String get profileAvgCycleDays => 'Average Cycle Length (Days)';
+
+  @override
+  String get profileSaveChanges => 'Save Changes';
+
+  @override
+  String get profileAddContact => 'Add Contact';
+
+  @override
+  String get profileEditContact => 'Edit Contact';
+
+  @override
+  String get profilePhone => 'Phone';
+
+  @override
+  String get profileSave => 'Save';
+
+  @override
+  String get profileEmergencyContactsTitle => 'Emergency Contacts';
+
+  @override
+  String get profileAddNew => 'Add New';
+
+  @override
+  String get profileNoContacts => 'No emergency contacts set up yet.';
+
+  @override
+  String get navHome => 'Home';
+
+  @override
+  String get navCycle => 'Cycle';
+
+  @override
+  String get navAsk => 'Ask';
+
+  @override
+  String get navInsights => 'Insights';
+
+  @override
+  String get navYou => 'You';
+
+  @override
+  String get settingsHelpSupport => 'Help & Support';
+
+  @override
+  String get settingsContactUs => 'Contact Us / Report Bug';
+
+  @override
+  String get settingsContactDesc => 'Send an email to our support team';
+
+  @override
+  String get settingsEmailError =>
+      'Could not open email app. Please email us at support@rhythma.com';
+}

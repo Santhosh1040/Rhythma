@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:rhythma/l10n/app_localizations.dart';
 import '../../config/theme.dart';
 import '../../components/shared.dart';
 import '../../components/charts.dart';
+import '../../providers/theme_provider.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    context.watch<ThemeProvider>();
+    final l10n = AppLocalizations.of(context)!;
     return SingleChildScrollView(
       padding: const EdgeInsets.fromLTRB(20, 0, 20, 100),
       child: Column(
@@ -22,8 +27,8 @@ class HomeScreen extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Text(
-                        'Namaste, Aarya',
+                      Text(
+                        l10n.homeGreeting,
                         style: TextStyle(
                           fontSize: 26,
                           fontWeight: FontWeight.w700,
@@ -32,7 +37,7 @@ class HomeScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 2),
                       Text(
-                        'Day 14 · Ovulation phase',
+                        l10n.homePhaseDesc,
                         style: TextStyle(
                           fontSize: 13,
                           color: RhythmaColors.mutedFg,
@@ -76,7 +81,7 @@ class HomeScreen extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'NEXT PERIOD IN',
+                                l10n.homeNextPeriod,
                                 style: TextStyle(
                                   fontSize: 10,
                                   fontWeight: FontWeight.w600,
@@ -89,7 +94,7 @@ class HomeScreen extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.baseline,
                                 textBaseline: TextBaseline.alphabetic,
                                 children: [
-                                  const Text(
+                                  Text(
                                     '14',
                                     style: TextStyle(
                                       fontSize: 36,
@@ -100,7 +105,7 @@ class HomeScreen extends StatelessWidget {
                                   ),
                                   const SizedBox(width: 4),
                                   Text(
-                                    'days',
+                                    l10n.homeDaysLabel,
                                     style: TextStyle(
                                       fontSize: 15,
                                       color: RhythmaColors.mutedFg,
@@ -111,15 +116,15 @@ class HomeScreen extends StatelessWidget {
                               const SizedBox(height: 6),
                               RichText(
                                 text: TextSpan(
-                                  style: const TextStyle(
+                                  style: TextStyle(
                                     fontSize: 13,
                                     color: RhythmaColors.foreground,
                                   ),
                                   children: [
-                                    const TextSpan(text: 'Fertile window · '),
+                                    TextSpan(text: l10n.homeFertileWindow),
                                     TextSpan(
-                                      text: 'High energy',
-                                      style: const TextStyle(
+                                      text: l10n.homeHighEnergy,
+                                      style: TextStyle(
                                         color: RhythmaColors.rose,
                                         fontWeight: FontWeight.w600,
                                       ),
@@ -174,11 +179,11 @@ class HomeScreen extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        const Icon(Icons.auto_awesome_rounded,
+                        Icon(Icons.auto_awesome_rounded,
                             size: 14, color: Colors.white),
                         const SizedBox(width: 6),
                         Text(
-                          'RHYTHMA AI',
+                          l10n.homeAiTitle,
                           style: TextStyle(
                             fontSize: 10,
                             fontWeight: FontWeight.w700,
@@ -190,8 +195,8 @@ class HomeScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      'Ask me anything about your body,\nin your language.',
-                      style: const TextStyle(
+                      l10n.homeAiSubtitle,
+                      style: TextStyle(
                         fontSize: 17,
                         fontWeight: FontWeight.w700,
                         color: Colors.white,
@@ -216,7 +221,7 @@ class HomeScreen extends StatelessWidget {
                                     color: Colors.white.withOpacity(0.9)),
                                 const SizedBox(width: 8),
                                 Text(
-                                  'Why are my periods irregular?',
+                                  l10n.homeAiPrompt,
                                   style: TextStyle(
                                     fontSize: 13,
                                     color: Colors.white.withOpacity(0.9),
@@ -234,7 +239,7 @@ class HomeScreen extends StatelessWidget {
                             color: Colors.white.withOpacity(0.25),
                             borderRadius: BorderRadius.circular(20),
                           ),
-                          child: const Icon(Icons.mic_rounded,
+                          child: Icon(Icons.mic_rounded,
                               size: 18, color: Colors.white),
                         ),
                       ],
@@ -249,32 +254,32 @@ class HomeScreen extends StatelessWidget {
 
           // ── Today's log ────────────────────────────────────
           SectionHeader(
-            title: 'How are you feeling today?',
-            action: 'Log all',
+            title: l10n.homeFeelingTitle,
+            action: l10n.homeLogAll,
           ),
           Row(
             children: [
               _LogButton(
                 icon: Icons.water_drop_outlined,
-                label: 'Flow',
+                label: l10n.homeLogFlow,
                 color: RhythmaColors.rose,
               ),
               const SizedBox(width: 10),
               _LogButton(
                 icon: Icons.favorite_border_rounded,
-                label: 'Mood',
+                label: l10n.homeLogMood,
                 color: RhythmaColors.coral,
               ),
               const SizedBox(width: 10),
               _LogButton(
                 icon: Icons.bedtime_outlined,
-                label: 'Sleep',
+                label: l10n.homeLogSleep,
                 color: RhythmaColors.primary,
               ),
               const SizedBox(width: 10),
               _LogButton(
                 icon: Icons.air_rounded,
-                label: 'Stress',
+                label: l10n.homeLogStress,
                 color: RhythmaColors.teal,
               ),
             ],
@@ -292,7 +297,7 @@ class HomeScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'WEEKLY INSIGHT',
+                        l10n.homeWeeklyInsightLabel,
                         style: TextStyle(
                           fontSize: 10,
                           fontWeight: FontWeight.w700,
@@ -301,8 +306,8 @@ class HomeScreen extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 6),
-                      const Text(
-                        'Your sleep improved 12% this week — your cycle may thank you.',
+                      Text(
+                        l10n.homeWeeklyInsightTitle,
                         style: TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.w600,
@@ -312,7 +317,7 @@ class HomeScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 6),
                       Text(
-                        'Consistent rest before ovulation supports hormonal balance.',
+                        l10n.homeWeeklyInsightDesc,
                         style: TextStyle(
                           fontSize: 13,
                           color: RhythmaColors.mutedFg,
@@ -332,17 +337,17 @@ class HomeScreen extends StatelessWidget {
           const SizedBox(height: 14),
 
           // ── Education cards ────────────────────────────────
-          const SectionHeader(title: 'Learn with Rhythma'),
+          SectionHeader(title: l10n.homeLearnTitle),
           SizedBox(
             height: 128,
             child: ListView(
               scrollDirection: Axis.horizontal,
               children: [
-                _LearnCard(title: 'Understanding PCOS', color: RhythmaColors.rose),
+                _LearnCard(title: l10n.homeLearnPcos, color: RhythmaColors.rose, label: l10n.homeArticle),
                 const SizedBox(width: 10),
-                _LearnCard(title: 'Hormones 101', color: RhythmaColors.primary),
+                _LearnCard(title: l10n.homeLearnHormones, color: RhythmaColors.primary, label: l10n.homeArticle),
                 const SizedBox(width: 10),
-                _LearnCard(title: 'Iron-rich foods', color: RhythmaColors.coral),
+                _LearnCard(title: l10n.homeLearnIron, color: RhythmaColors.coral, label: l10n.homeArticle),
               ],
             ),
           ),
@@ -440,7 +445,7 @@ class _LogButton extends StatelessWidget {
             ),
             const SizedBox(height: 6),
             Text(label,
-                style: const TextStyle(
+                style: TextStyle(
                     fontSize: 11,
                     fontWeight: FontWeight.w600,
                     color: RhythmaColors.foreground)),
@@ -454,19 +459,26 @@ class _LogButton extends StatelessWidget {
 class _LearnCard extends StatelessWidget {
   final String title;
   final Color color;
+  final String label;
 
-  const _LearnCard({required this.title, required this.color});
+  const _LearnCard({required this.title, required this.color, required this.label});
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    
     return Container(
       width: 152,
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [color, Color.lerp(color, RhythmaColors.primary, 0.5)!],
-        ),
+        gradient: isDark
+            ? null
+            : LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [color, Color.lerp(color, RhythmaColors.primary, 0.5)!],
+              ),
+        color: isDark ? color.withOpacity(0.15) : null,
+        border: isDark ? Border.all(color: color.withOpacity(0.3)) : null,
         borderRadius: BorderRadius.circular(20),
       ),
       padding: const EdgeInsets.all(16),
@@ -475,7 +487,7 @@ class _LearnCard extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           Text(
-            'ARTICLE',
+            label,
             style: TextStyle(
                 fontSize: 9,
                 fontWeight: FontWeight.w700,
@@ -485,7 +497,7 @@ class _LearnCard extends StatelessWidget {
           const SizedBox(height: 4),
           Text(
             title,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w700,
               color: Colors.white,

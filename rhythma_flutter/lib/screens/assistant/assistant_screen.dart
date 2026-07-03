@@ -1,9 +1,12 @@
 import 'dart:ui' show ImageFilter;
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:rhythma/l10n/app_localizations.dart';
 import '../../config/theme.dart';
 import '../../components/shared.dart';
 import '../../services/gemini_service.dart';
 import '../../services/local_storage_service.dart';
+import '../../providers/theme_provider.dart';
 
 class AssistantScreen extends StatefulWidget {
   const AssistantScreen({Key? key}) : super(key: key);
@@ -16,22 +19,31 @@ class _AssistantScreenState extends State<AssistantScreen> {
   final ScrollController _scroll = ScrollController();
   bool _isLoading = false;
 
-  final _suggested = const [
-    'Why are my periods irregular?',
-    'What causes severe cramps?',
-    'Is a 35-day cycle normal?',
-    'Foods that help with PMS',
-    'मेरे पीरियड्स अनियमित हैं — क्या यह सामान्य है?',
-  ];
+  late List<String> _suggested;
+  late List<_Msg> _messages;
+  bool _initialized = false;
 
-  final List<_Msg> _messages = [
-    _Msg(
-      role: 'ai',
-      text: 'Hi Aarya 🌸 I\'m Rhythma, your private health companion. '
-          'Ask me anything about your cycle, symptoms, or wellbeing — '
-          'in English, Hindi, Marathi, or Tamil.',
-    ),
-  ];
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (!_initialized) {
+      final l10n = AppLocalizations.of(context)!;
+      _suggested = [
+        l10n.assistantSug1,
+        l10n.assistantSug2,
+        l10n.assistantSug3,
+        l10n.assistantSug4,
+        l10n.assistantSug5,
+      ];
+      _messages = [
+        _Msg(
+          role: 'ai',
+          text: l10n.assistantWelcome,
+        ),
+      ];
+      _initialized = true;
+    }
+  }
 
   Future<void> _send(String text) async {
     final t = text.trim();
@@ -78,6 +90,8 @@ class _AssistantScreenState extends State<AssistantScreen> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<ThemeProvider>();
+    final l10n = AppLocalizations.of(context)!;
     final lang = LocalStorageService.preferredLanguage;
     return Column(
       children: [
@@ -89,14 +103,14 @@ class _AssistantScreenState extends State<AssistantScreen> {
               Container(
                 width: 40, height: 40,
                 decoration: BoxDecoration(gradient: RhythmaGradients.primary, shape: BoxShape.circle),
-                child: const Icon(Icons.favorite_rounded, color: Colors.white, size: 20),
+                child: Icon(Icons.favorite_rounded, color: Colors.white, size: 20),
               ),
               const SizedBox(width: 12),
               Expanded(
                 child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  const Text('Rhythma Assistant',
+                  Text(l10n.assistantTitle,
                       style: TextStyle(fontSize: 17, fontWeight: FontWeight.w700, color: RhythmaColors.foreground)),
-                  Text(lang == 'hi' ? 'आपकी स्वास्थ्य साथी • निजी और सुरक्षित' : 'Your private health companion',
+                  Text(l10n.assistantSubtitle,
                       style: TextStyle(fontSize: 12, color: RhythmaColors.mutedFg)),
                 ]),
               ),
@@ -142,7 +156,7 @@ class _AssistantScreenState extends State<AssistantScreen> {
                     borderRadius: BorderRadius.circular(20),
                     border: Border.all(color: RhythmaColors.border),
                   ),
-                  child: Text(_suggested[i], style: const TextStyle(fontSize: 12, color: RhythmaColors.foreground)),
+                  child: Text(_suggested[i], style: TextStyle(fontSize: 12, color: RhythmaColors.foreground)),
                 ),
               ),
             ),
@@ -167,9 +181,9 @@ class _AssistantScreenState extends State<AssistantScreen> {
                     Expanded(
                       child: TextField(
                         controller: _ctrl,
-                        style: const TextStyle(fontSize: 14, color: RhythmaColors.foreground),
+                        style: TextStyle(fontSize: 14, color: RhythmaColors.foreground),
                         decoration: InputDecoration(
-                          hintText: lang == 'hi' ? 'अपना सवाल पूछें...' : 'Ask anything about your health...',
+                          hintText: l10n.assistantInputHint,
                           border: InputBorder.none,
                           contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
                         ),
@@ -184,7 +198,7 @@ class _AssistantScreenState extends State<AssistantScreen> {
                         child: Container(
                           width: 40, height: 40,
                           decoration: BoxDecoration(gradient: RhythmaGradients.primary, shape: BoxShape.circle),
-                          child: const Icon(Icons.send_rounded, color: Colors.white, size: 18),
+                          child: Icon(Icons.send_rounded, color: Colors.white, size: 18),
                         ),
                       ),
                     ),
@@ -222,7 +236,7 @@ class _ChatBubble extends StatelessWidget {
             Container(
               width: 28, height: 28,
               decoration: BoxDecoration(gradient: RhythmaGradients.primary, shape: BoxShape.circle),
-              child: const Icon(Icons.favorite_rounded, color: Colors.white, size: 14),
+              child: Icon(Icons.favorite_rounded, color: Colors.white, size: 14),
             ),
             const SizedBox(width: 8),
           ],
@@ -260,7 +274,7 @@ class _TypingBubble extends StatelessWidget {
         Container(
           width: 28, height: 28,
           decoration: BoxDecoration(gradient: RhythmaGradients.primary, shape: BoxShape.circle),
-          child: const Icon(Icons.favorite_rounded, color: Colors.white, size: 14),
+          child: Icon(Icons.favorite_rounded, color: Colors.white, size: 14),
         ),
         const SizedBox(width: 8),
         Container(
@@ -309,6 +323,6 @@ class _AnimatedDotState extends State<_AnimatedDot> with SingleTickerProviderSta
   Widget build(BuildContext context) => FadeTransition(
     opacity: _a,
     child: Container(width: 7, height: 7,
-        decoration: const BoxDecoration(color: RhythmaColors.primary, shape: BoxShape.circle)),
+        decoration: BoxDecoration(color: RhythmaColors.primary, shape: BoxShape.circle)),
   );
 }

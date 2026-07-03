@@ -9,7 +9,7 @@ class GlassCard extends StatelessWidget {
   final double? borderRadius;
   final VoidCallback? onTap;
 
-  const GlassCard({
+  GlassCard({
     Key? key,
     required this.child,
     this.padding = const EdgeInsets.all(20),
@@ -69,23 +69,32 @@ class GradientBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final primaryColor = colors?.first ?? RhythmaColors.primary;
+    
     return Container(
       padding: padding,
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: colors ??
-              [RhythmaColors.primary, RhythmaColors.rose],
-        ),
+        gradient: isDark 
+            ? null 
+            : LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: colors ??
+                    [RhythmaColors.primary, RhythmaColors.primary.withOpacity(0.6)],
+              ),
+        color: isDark ? primaryColor.withOpacity(0.15) : null,
+        border: isDark ? Border.all(color: primaryColor.withOpacity(0.3)) : null,
         borderRadius: BorderRadius.circular(borderRadius),
-        boxShadow: [
-          BoxShadow(
-            color: RhythmaColors.primary.withValues(alpha: 0.28),
-            blurRadius: 40,
-            offset: const Offset(0, 10),
-          ),
-        ],
+        boxShadow: isDark 
+            ? null 
+            : [
+                BoxShadow(
+                  color: primaryColor.withOpacity(0.28),
+                  blurRadius: 40,
+                  offset: const Offset(0, 10),
+                ),
+              ],
       ),
       child: child,
     );
@@ -98,7 +107,7 @@ class TintedIcon extends StatelessWidget {
   final Color color;
   final double size;
 
-  const TintedIcon({
+  TintedIcon({
     Key? key,
     required this.icon,
     required this.color,
@@ -125,7 +134,7 @@ class SectionHeader extends StatelessWidget {
   final String? action;
   final VoidCallback? onAction;
 
-  const SectionHeader({
+  SectionHeader({
     Key? key,
     required this.title,
     this.action,
@@ -141,7 +150,7 @@ class SectionHeader extends StatelessWidget {
           Expanded(
             child: Text(
               title,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w600,
                 color: RhythmaColors.foreground,
@@ -153,7 +162,7 @@ class SectionHeader extends StatelessWidget {
               onTap: onAction,
               child: Text(
                 action!,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.w600,
                   color: RhythmaColors.primary,
@@ -180,7 +189,7 @@ class RhythmaScaffold extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(gradient: RhythmaGradients.bg),
+      decoration: BoxDecoration(gradient: RhythmaGradients.bg),
       child: Scaffold(
         backgroundColor: Colors.transparent,
         extendBody: extendBody,

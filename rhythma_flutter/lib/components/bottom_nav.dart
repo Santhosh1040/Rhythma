@@ -1,6 +1,9 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:rhythma/l10n/app_localizations.dart';
 import '../config/theme.dart';
+import '../providers/theme_provider.dart';
 
 class RhythmaBottomNav extends StatelessWidget {
   final int currentIndex;
@@ -12,16 +15,21 @@ class RhythmaBottomNav extends StatelessWidget {
     required this.onTap,
   }) : super(key: key);
 
-  static const _tabs = [
-    _NavTab(icon: Icons.home_rounded, label: 'Home'),
-    _NavTab(icon: Icons.favorite_rounded, label: 'Cycle'),
-    _NavTab(icon: Icons.auto_awesome_rounded, label: 'Ask'),
-    _NavTab(icon: Icons.bar_chart_rounded, label: 'Insights'),
-    _NavTab(icon: Icons.person_rounded, label: 'You'),
-  ];
+  List<_NavTab> _getTabs(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    return [
+      _NavTab(icon: Icons.home_rounded, label: l10n.navHome),
+      _NavTab(icon: Icons.favorite_rounded, label: l10n.navCycle),
+      _NavTab(icon: Icons.auto_awesome_rounded, label: l10n.navAsk),
+      _NavTab(icon: Icons.bar_chart_rounded, label: l10n.navInsights),
+      _NavTab(icon: Icons.person_rounded, label: l10n.navYou),
+    ];
+  }
 
   @override
   Widget build(BuildContext context) {
+    context.watch<ThemeProvider>();
+    final tabs = _getTabs(context);
     return Padding(
       padding: const EdgeInsets.fromLTRB(12, 0, 12, 12),
       child: ClipRRect(
@@ -47,8 +55,8 @@ class RhythmaBottomNav extends StatelessWidget {
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: List.generate(_tabs.length, (i) {
-                final tab = _tabs[i];
+              children: List.generate(tabs.length, (i) {
+                final tab = tabs[i];
                 final active = i == currentIndex;
                 return Expanded(
                   child: GestureDetector(

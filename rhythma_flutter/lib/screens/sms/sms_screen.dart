@@ -59,7 +59,7 @@ class _SmsScreenState extends State<SmsScreen> {
                     TintedIcon(
                         icon: Icons.sms_rounded, color: RhythmaColors.teal),
                     const SizedBox(width: 12),
-                    const Expanded(
+                    Expanded(
                       child: Text('Weekly Health Summary',
                           style: TextStyle(
                               fontSize: 16,
@@ -89,7 +89,7 @@ class _SmsScreenState extends State<SmsScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text('Configuration',
+                Text('Configuration',
                     style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.w600,
@@ -131,7 +131,7 @@ class _SmsScreenState extends State<SmsScreen> {
                             height: 18,
                             child: CircularProgressIndicator(
                                 strokeWidth: 2, color: Colors.white))
-                        : const Text('Save Settings'),
+                        : Text('Save Settings'),
                   ),
                 ),
               ],

@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:rhythma/l10n/app_localizations.dart';
 import '../../config/theme.dart';
 import '../../components/shared.dart';
 import '../../components/charts.dart';
+import '../../providers/theme_provider.dart';
 
 class InsightsScreen extends StatelessWidget {
   const InsightsScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    context.watch<ThemeProvider>();
+    final l10n = AppLocalizations.of(context)!;
     return SingleChildScrollView(
       padding: const EdgeInsets.fromLTRB(20, 0, 20, 100),
       child: Column(
@@ -19,8 +24,8 @@ class InsightsScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  'Health Insights',
+                Text(
+                  l10n.insightsTitle,
                   style: TextStyle(
                     fontSize: 26,
                     fontWeight: FontWeight.w700,
@@ -28,7 +33,7 @@ class InsightsScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 2),
-                Text('Last 90 days',
+                Text(l10n.insightsSubtitle,
                     style: TextStyle(
                         fontSize: 13, color: RhythmaColors.mutedFg)),
               ],
@@ -60,7 +65,7 @@ class InsightsScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'MENSTRUAL HEALTH SCORE',
+                            l10n.insightsMhsLabel,
                             style: TextStyle(
                               fontSize: 10,
                               fontWeight: FontWeight.w700,
@@ -69,7 +74,7 @@ class InsightsScreen extends StatelessWidget {
                             ),
                           ),
                           const SizedBox(height: 5),
-                          const Text(
+                          Text(
                             '82 / 100',
                             style: TextStyle(
                               fontSize: 28,
@@ -80,11 +85,11 @@ class InsightsScreen extends StatelessWidget {
                           const SizedBox(height: 5),
                           Row(
                             children: [
-                              const Icon(Icons.trending_up_rounded,
+                              Icon(Icons.trending_up_rounded,
                                   size: 14, color: RhythmaColors.teal),
                               const SizedBox(width: 5),
                               Text(
-                                '+6 vs last cycle',
+                                l10n.insightsMhsDelta,
                                 style: TextStyle(
                                   fontSize: 12,
                                   color: RhythmaColors.mutedFg,
@@ -108,9 +113,9 @@ class InsightsScreen extends StatelessWidget {
             children: [
               Expanded(
                 child: _MiniCard(
-                  label: 'Cycle Variability',
-                  value: '3.2 days',
-                  delta: 'Low',
+                  label: l10n.insightsVar,
+                  value: '3.2 ${l10n.homeDaysLabel}',
+                  delta: l10n.logEnergyLow,
                   trendUp: false,
                   color: RhythmaColors.teal,
                   icon: Icons.graphic_eq_rounded,
@@ -119,9 +124,9 @@ class InsightsScreen extends StatelessWidget {
               const SizedBox(width: 10),
               Expanded(
                 child: _MiniCard(
-                  label: 'Avg Cycle',
-                  value: '29 days',
-                  delta: 'Regular',
+                  label: l10n.insightsAvgCycle,
+                  value: '29 ${l10n.homeDaysLabel}',
+                  delta: l10n.insightsRegular,
                   trendUp: true,
                   color: RhythmaColors.primary,
                   icon: Icons.favorite_rounded,
@@ -134,7 +139,7 @@ class InsightsScreen extends StatelessWidget {
             children: [
               Expanded(
                 child: _MiniCard(
-                  label: 'Sleep',
+                  label: l10n.homeLogSleep,
                   value: '7.2h',
                   delta: '+12%',
                   trendUp: true,
@@ -145,8 +150,8 @@ class InsightsScreen extends StatelessWidget {
               const SizedBox(width: 10),
               Expanded(
                 child: _MiniCard(
-                  label: 'Stress',
-                  value: 'Moderate',
+                  label: l10n.homeLogStress,
+                  value: l10n.insightsModerate,
                   delta: '-8%',
                   trendUp: false,
                   color: RhythmaColors.coral,
@@ -170,7 +175,7 @@ class InsightsScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'CYCLE LENGTH TREND',
+                            l10n.insightsTrendLabel,
                             style: TextStyle(
                               fontSize: 10,
                               fontWeight: FontWeight.w700,
@@ -179,8 +184,8 @@ class InsightsScreen extends StatelessWidget {
                             ),
                           ),
                           const SizedBox(height: 4),
-                          const Text(
-                            'Stabilizing',
+                          Text(
+                            l10n.insightsStabilizing,
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w700,
@@ -197,8 +202,8 @@ class InsightsScreen extends StatelessWidget {
                         color: RhythmaColors.teal.withOpacity(0.14),
                         borderRadius: BorderRadius.circular(12),
                       ),
-                      child: const Text(
-                        'Healthy',
+                      child: Text(
+                        l10n.insightsHealthy,
                         style: TextStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.w600,
@@ -238,8 +243,8 @@ class InsightsScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  'Symptom patterns',
+                Text(
+                  l10n.insightsSymptomsLabel,
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w700,
@@ -247,13 +252,13 @@ class InsightsScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 14),
-                _SymptomBar('Cramps', 0.70, RhythmaColors.rose),
+                _SymptomBar(l10n.logSympCramps, 0.70, RhythmaColors.rose),
                 const SizedBox(height: 12),
-                _SymptomBar('Headaches', 0.35, RhythmaColors.coral),
+                _SymptomBar(l10n.logSympHeadache, 0.35, RhythmaColors.coral),
                 const SizedBox(height: 12),
-                _SymptomBar('Bloating', 0.55, RhythmaColors.primary),
+                _SymptomBar(l10n.logSympBloating, 0.55, RhythmaColors.primary),
                 const SizedBox(height: 12),
-                _SymptomBar('Mood swings', 0.45, RhythmaColors.teal),
+                _SymptomBar(l10n.insightsMoodSwings, 0.45, RhythmaColors.teal),
               ],
             ),
           ),
@@ -261,11 +266,11 @@ class InsightsScreen extends StatelessWidget {
           const SizedBox(height: 14),
 
           // Wellness recommendations
-          const SectionHeader(title: 'Wellness recommendations'),
+          SectionHeader(title: l10n.insightsWellnessLabel),
           ...[
-            _Rec('Add iron-rich foods near period start', RhythmaColors.rose),
-            _Rec('Try 10-minute yoga on luteal-phase days', RhythmaColors.primary),
-            _Rec('Hydrate 2.5L during ovulation week', RhythmaColors.teal),
+            _Rec(l10n.insightsRec1, RhythmaColors.rose),
+            _Rec(l10n.insightsRec2, RhythmaColors.primary),
+            _Rec(l10n.insightsRec3, RhythmaColors.teal),
           ].map((r) => Padding(
                 padding: const EdgeInsets.only(bottom: 8),
                 child: r,
@@ -329,7 +334,7 @@ class _MiniCard extends StatelessWidget {
           const SizedBox(height: 3),
           Text(
             value,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.w700,
               color: RhythmaColors.foreground,
@@ -362,7 +367,7 @@ class _SymptomBar extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(label,
-                style: const TextStyle(
+                style: TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.w600,
                     color: RhythmaColors.foreground)),
@@ -405,14 +410,14 @@ class _Rec extends StatelessWidget {
               color: color,
               shape: BoxShape.circle,
             ),
-            child: const Icon(Icons.favorite_rounded,
+            child: Icon(Icons.favorite_rounded,
                 color: Colors.white, size: 16),
           ),
           const SizedBox(width: 12),
           Expanded(
             child: Text(
               text,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 13,
                 color: RhythmaColors.foreground,
                 height: 1.4,

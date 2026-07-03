@@ -74,6 +74,18 @@ class LocalStorageService {
   static Future<void> setSmsEnabled(bool enabled) =>
       _settings.put('sms_enabled', enabled);
 
+  static String? getThemeMode() =>
+      _settings.get('theme_mode') as String?;
+
+  static Future<void> setThemeMode(String mode) =>
+      _settings.put('theme_mode', mode);
+
+  static int? getPrimaryColor() =>
+      _settings.get('primary_color') as int?;
+
+  static Future<void> setPrimaryColor(int colorValue) =>
+      _settings.put('primary_color', colorValue);
+
   // ── User Profile ──────────────────────────────────────────────────────────
 
   static Box<Map> get _userBox => Hive.box<Map>(_Keys.userBox);

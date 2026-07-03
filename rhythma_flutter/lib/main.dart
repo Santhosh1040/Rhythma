@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:provider/provider.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:rhythma/l10n/app_localizations.dart';
+
 import 'config/theme.dart';
 import 'components/bottom_nav.dart';
 import 'screens/home/home_screen.dart';
@@ -9,6 +13,9 @@ import 'screens/assistant/assistant_screen.dart';
 import 'screens/insights/insights_screen.dart';
 import 'screens/profile/profile_screen.dart';
 import 'services/local_storage_service.dart';
+import 'providers/locale_provider.dart';
+import 'providers/theme_provider.dart';
+import 'services/notification_service.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,6 +29,9 @@ Future<void> main() async {
   // Initialise local offline storage
   await LocalStorageService.init();
 
+  // Initialize notifications
+  await NotificationService.instance.init();
+
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
@@ -29,7 +39,15 @@ Future<void> main() async {
     ),
   );
 
-  runApp(const RhythmaApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => LocaleProvider()),
+        ChangeNotifierProvider(create: (_) => ThemeProvider()),
+      ],
+      child: const RhythmaApp(),
+    ),
+  );
 }
 
 class RhythmaApp extends StatelessWidget {
@@ -37,10 +55,27 @@ class RhythmaApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = context.watch<ThemeProvider>();
+    
     return MaterialApp(
       title: 'Rhythma',
       theme: RhythmaTheme.theme,
+      themeMode: themeProvider.themeMode,
       debugShowCheckedModeBanner: false,
+      locale: context.watch<LocaleProvider>().locale,
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('en'),
+        Locale('hi'),
+        Locale('ta'),
+        Locale('te'),
+        Locale('mr'),
+      ],
       home: const RhythmaShell(),
     );
   }
@@ -66,13 +101,10 @@ class _RhythmaShellState extends State<RhythmaShell> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<ThemeProvider>();
     return Container(
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [Color(0xFFFDF8FF), Color(0xFFF8EEF8)],
-        ),
+      decoration: BoxDecoration(
+        gradient: RhythmaGradients.bg,
       ),
       child: Scaffold(
         backgroundColor: Colors.transparent,

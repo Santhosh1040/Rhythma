@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:rhythma/l10n/app_localizations.dart';
 import '../../config/theme.dart';
 import '../../components/shared.dart';
+import '../../providers/theme_provider.dart';
 
 class CycleScreen extends StatefulWidget {
   const CycleScreen({Key? key}) : super(key: key);
@@ -16,11 +19,11 @@ class _CycleScreenState extends State<CycleScreen> {
   final int _firstWeekday = 5; // Friday
 
   // Day → phase
-  static String _phase(int day) {
-    if (day <= 5) return 'Period';
-    if (day <= 13) return 'Follicular';
-    if (day <= 16) return 'Ovulation';
-    return 'Luteal';
+  static String _phase(int day, AppLocalizations l10n) {
+    if (day <= 5) return l10n.cyclePhasePeriod;
+    if (day <= 13) return l10n.cyclePhaseFollicular;
+    if (day <= 16) return l10n.cyclePhaseOvulation;
+    return l10n.cyclePhaseLuteal;
   }
 
   static Color _phaseColor(int day) {
@@ -32,6 +35,8 @@ class _CycleScreenState extends State<CycleScreen> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<ThemeProvider>();
+    final l10n = AppLocalizations.of(context)!;
     return SingleChildScrollView(
       padding: const EdgeInsets.fromLTRB(20, 0, 20, 100),
       child: Column(
@@ -39,7 +44,7 @@ class _CycleScreenState extends State<CycleScreen> {
         children: [
           // Header
           _ScreenHeader(
-            title: 'Cycle Tracker',
+            title: l10n.cycleTrackerTitle,
             subtitle: 'November 2025',
           ),
 
@@ -52,7 +57,7 @@ class _CycleScreenState extends State<CycleScreen> {
                 Row(
                   children: [
                     _CircleBtn(icon: Icons.chevron_left_rounded, onTap: () {}),
-                    const Expanded(
+                    Expanded(
                       child: Center(
                         child: Text(
                           'November 2025',
@@ -101,7 +106,7 @@ class _CycleScreenState extends State<CycleScreen> {
                     ),
                     ...List.generate(_monthDays, (i) {
                       final day = i + 1;
-                      final phase = _phase(day);
+                      final phase = _phase(day, l10n);
                       final phaseColor = _phaseColor(day);
                       final isSelected = _selectedDay == day;
                       final isToday = _today == day;
@@ -169,10 +174,10 @@ class _CycleScreenState extends State<CycleScreen> {
                   spacing: 14,
                   runSpacing: 6,
                   children: [
-                    _Legend('Period', RhythmaColors.rose),
-                    _Legend('Follicular', RhythmaColors.primary),
-                    _Legend('Ovulation', RhythmaColors.teal),
-                    _Legend('Luteal', RhythmaColors.coral),
+                    _Legend(l10n.cyclePhasePeriod, RhythmaColors.rose),
+                    _Legend(l10n.cyclePhaseFollicular, RhythmaColors.primary),
+                    _Legend(l10n.cyclePhaseOvulation, RhythmaColors.teal),
+                    _Legend(l10n.cyclePhaseLuteal, RhythmaColors.coral),
                   ],
                 ),
               ],
@@ -185,8 +190,8 @@ class _CycleScreenState extends State<CycleScreen> {
           Padding(
             padding: const EdgeInsets.only(bottom: 12),
             child: Text(
-              'Log for Nov $_selectedDay · ${_phase(_selectedDay)}',
-              style: const TextStyle(
+              '${l10n.logFor} Nov $_selectedDay · ${_phase(_selectedDay, l10n)}',
+              style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w700,
                 color: RhythmaColors.foreground,
@@ -195,36 +200,36 @@ class _CycleScreenState extends State<CycleScreen> {
           ),
           _LogRow(
             icon: Icons.water_drop_outlined,
-            label: 'Flow',
-            options: const ['None', 'Light', 'Medium', 'Heavy'],
+            label: l10n.homeLogFlow,
+            options: [l10n.logNone, l10n.logLight, l10n.logMedium, l10n.logHeavy],
             color: RhythmaColors.rose,
           ),
           const SizedBox(height: 10),
           _LogRow(
             icon: Icons.sentiment_satisfied_alt_rounded,
-            label: 'Mood',
+            label: l10n.homeLogMood,
             options: const ['😊', '😐', '😔', '😤', '🥰'],
             color: RhythmaColors.coral,
           ),
           const SizedBox(height: 10),
           _LogRow(
             icon: Icons.bolt_rounded,
-            label: 'Energy',
-            options: const ['Low', 'Mid', 'High'],
+            label: l10n.logLabelEnergy,
+            options: [l10n.logEnergyLow, l10n.logEnergyMid, l10n.logEnergyHigh],
             color: RhythmaColors.primary,
           ),
           const SizedBox(height: 10),
           _LogRow(
             icon: Icons.bedtime_outlined,
-            label: 'Sleep',
-            options: const ['<5h', '5-7h', '7-9h', '9h+'],
+            label: l10n.homeLogSleep,
+            options: [l10n.logSleep1, l10n.logSleep2, l10n.logSleep3, l10n.logSleep4],
             color: RhythmaColors.primary,
           ),
           const SizedBox(height: 10),
           _LogRow(
             icon: Icons.psychology_outlined,
-            label: 'Symptoms',
-            options: const ['Cramps', 'Headache', 'Bloating', 'Acne'],
+            label: l10n.logLabelSymptoms,
+            options: [l10n.logSympCramps, l10n.logSympHeadache, l10n.logSympBloating, l10n.logSympAcne],
             color: RhythmaColors.teal,
           ),
         ],
@@ -274,7 +279,7 @@ class _LogRowState extends State<_LogRow> {
               const SizedBox(width: 10),
               Text(
                 widget.label,
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.w600,
                   color: RhythmaColors.foreground,
@@ -382,7 +387,7 @@ class _ScreenHeader extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(title,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 26,
                 fontWeight: FontWeight.w700,
                 color: RhythmaColors.foreground,

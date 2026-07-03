@@ -47,10 +47,10 @@ dependencies:
   # ── Localisation / i18n ────────────────────────────────
   flutter_localizations:
     sdk: flutter
-  intl: ^0.19.0
+  intl: ^0.20.2
 
   # ── Permissions ────────────────────────────────────────
-  permission_handler: ^11.3.1
+  permission_handler: ^12.0.3
 
   # ── Connectivity ───────────────────────────────────────
   connectivity_plus: ^6.0.3
@@ -63,6 +63,8 @@ dependencies:
 
   # ── URL Launcher ───────────────────────────────────────
   url_launcher: ^6.3.0
+  flutter_local_notifications: ^22.0.1
+  timezone: ^0.11.1
 
 dev_dependencies:
   flutter_test:
@@ -73,6 +75,7 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  generate: true
 
   assets:
     - assets/images/

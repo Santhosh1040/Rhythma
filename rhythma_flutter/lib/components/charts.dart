@@ -81,7 +81,7 @@ class _RingPainter extends CustomPainter {
       ..style = PaintingStyle.stroke
       ..strokeWidth = strokeWidth
       ..strokeCap = StrokeCap.round
-      ..shader = const SweepGradient(
+      ..shader = SweepGradient(
         colors: [RhythmaColors.primary, RhythmaColors.rose],
         startAngle: 0,
         endAngle: math.pi * 2,
@@ -153,7 +153,7 @@ class _ScorePainter extends CustomPainter {
       ..style = PaintingStyle.stroke
       ..strokeWidth = sw
       ..strokeCap = StrokeCap.round
-      ..shader = const SweepGradient(
+      ..shader = SweepGradient(
         colors: [RhythmaColors.primary, RhythmaColors.rose],
         startAngle: 0,
         endAngle: math.pi * 2,
@@ -171,13 +171,13 @@ class _ScorePainter extends CustomPainter {
 /// Sparkline chart for cycle trend
 class TrendChart extends StatelessWidget {
   final List<double> points;
-  final Color color;
+  final Color? color;
   final double height;
 
   const TrendChart({
     Key? key,
     required this.points,
-    this.color = RhythmaColors.primary,
+    this.color,
     this.height = 80,
   }) : super(key: key);
 
@@ -186,7 +186,7 @@ class TrendChart extends StatelessWidget {
     return SizedBox(
       height: height,
       child: CustomPaint(
-        painter: _SparkPainter(points: points, color: color),
+        painter: _SparkPainter(points: points, color: color ?? RhythmaColors.primary),
         size: Size.infinite,
       ),
     );
