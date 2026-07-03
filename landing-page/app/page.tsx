@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
-import { Smartphone, Bot, Heart, BarChart3, Lock, WifiOff, Check, Globe, MessageCircle, ShieldCheck } from 'lucide-react';
+import { Smartphone, Bot, Heart, BarChart3, Lock, WifiOff, Globe, MessageCircle, ShieldCheck } from 'lucide-react';
 
 export default function Page() {
   const [email, setEmail] = useState('');
