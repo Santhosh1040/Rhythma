@@ -24,7 +24,7 @@ export default function Page() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center gap-0">
-              <div className="w-18 h-18 relative -mr-5">
+              <div className="w-16 h-16 relative -mr-5">
                 <Image
                   src="/logo1.png"
                   alt="Rhythma logo"
@@ -129,7 +129,7 @@ export default function Page() {
               desc: 'Full functionality without internet. Sync seamlessly when connected.'
             }
           ].map((feature, idx) => (
-            <div key={idx} className="bg-white p-8 rounded-2xl shadow-sm border border-[#E8DDD5] hover:shadow-lg hover:-translate-y-1 hover:border-[#E94B7B]/30 transition-all duration-300">
+            <div key={idx} className="bg-white p-8 rounded-2xl shadow-sm border border-[#E8DDD5] hover:shadow-lg hover:-translate-y-1 hover:scale-[1.02] hover:border-[#E94B7B]/30 transition-all duration-300">
               <feature.icon className="w-9 h-9 mb-4 text-[#E94B7B]" strokeWidth={1.75} />
               <h3 className="text-xl font-bold text-[#2D5B6E] mb-3">{feature.title}</h3>
               <p className="text-[#666] leading-relaxed">{feature.desc}</p>
