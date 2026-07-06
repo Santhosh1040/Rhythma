@@ -92,6 +92,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final mhs = _insights['mhs'] ?? 82;
     final cvi = _insights['cvi'] ?? 'Low';
     final sleepHours = _insights['sleepHours'] ?? '7.2h';
+    final greeting = '${l10n.homeGreeting}, $userName';
 
     return SingleChildScrollView(
       padding: const EdgeInsets.fromLTRB(20, 0, 20, 100),
@@ -505,8 +506,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-
-  // ─── Helpers ────────────────────────────────────────────────────────────
+ // ─── Helpers ────────────────────────────────────────────────────────────
 
   void _showComingSoonDialog(BuildContext context, String topic) {
     showDialog(
