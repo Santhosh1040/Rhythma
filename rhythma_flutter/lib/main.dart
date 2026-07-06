@@ -16,6 +16,11 @@ import 'screens/cycle/cycle_screen.dart';
 import 'screens/home/home_screen.dart';
 import 'screens/insights/insights_screen.dart';
 import 'screens/profile/profile_screen.dart';
+import 'screens/onboarding/onboarding_screen.dart';
+import 'services/local_storage_service.dart';
+import 'providers/locale_provider.dart';
+import 'providers/theme_provider.dart';
+import 'providers/profile_provider.dart';
 import 'services/api_client.dart';
 import 'services/auth_service.dart';
 import 'services/local_storage_service.dart';
@@ -47,6 +52,7 @@ Future<void> main() async {
       providers: [
         ChangeNotifierProvider(create: (_) => LocaleProvider()),
         ChangeNotifierProvider(create: (_) => ThemeProvider()),
+        ChangeNotifierProvider(create: (_) => ProfileProvider()),
       ],
       child: const RhythmaApp(),
     ),
@@ -99,6 +105,38 @@ class RhythmaApp extends StatelessWidget {
         '/assistant': (_) => const ShellBackground(child: AssistantScreen()),
       },
     );
+  }
+}
+
+/// Root widget that decides whether to show onboarding or the main shell.
+/// Uses a [ValueNotifier] so the onboarding screen can trigger a rebuild
+/// without Navigator push/pop complexity.
+class RhythmaRoot extends StatefulWidget {
+  const RhythmaRoot({Key? key}) : super(key: key);
+
+  @override
+  State<RhythmaRoot> createState() => _RhythmaRootState();
+}
+
+class _RhythmaRootState extends State<RhythmaRoot> {
+  late bool _onboardingDone;
+
+  @override
+  void initState() {
+    super.initState();
+    _onboardingDone = LocalStorageService.onboardingCompleted;
+  }
+
+  void _handleOnboardingComplete() {
+    setState(() => _onboardingDone = true);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (!_onboardingDone) {
+      return OnboardingScreen(onComplete: _handleOnboardingComplete);
+    }
+    return const RhythmaShell();
   }
 }
 
