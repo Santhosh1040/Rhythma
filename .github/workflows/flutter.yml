@@ -1,0 +1,59 @@
+name: Flutter CI
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'rhythma_flutter/**'
+      - '.github/workflows/flutter.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'rhythma_flutter/**'
+      - '.github/workflows/flutter.yml'
+
+defaults:
+  run:
+    working-directory: rhythma_flutter
+
+jobs:
+  flutter-checks:
+    name: Analyze, format, and test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          cache: true
+
+      - name: Cache pub dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.pub-cache
+          key: ${{ runner.os }}-pub-${{ hashFiles('rhythma_flutter/pubspec.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-pub-
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Analyze
+        run: flutter analyze
+
+      - name: Check formatting
+        # Scoped to lib/ and test/ only — not `.`. The repo's generated
+        # build/ directory (gitignored, never present on a fresh checkout
+        # anyway) previously caused `dart format .` to crash on a stale
+        # native build artifact locally; scoping avoids that whole class
+        # of problem regardless of environment, and there's no reason to
+        # ever let the formatter walk into android/, ios/, web/, or
+        # .dart_tool/ in the first place.
+        run: dart format --set-exit-if-changed lib test
+
+      - name: Run tests
+        run: flutter test
