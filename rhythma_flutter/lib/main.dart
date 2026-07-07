@@ -61,8 +61,22 @@ Future<void> main() async {
   );
 }
 
-class RhythmaApp extends StatelessWidget {
+class RhythmaApp extends StatefulWidget {
   const RhythmaApp({super.key});
+
+  @override
+  State<RhythmaApp> createState() => _RhythmaAppState();
+}
+
+class _RhythmaAppState extends State<RhythmaApp> {
+  // Created once, not inline in build(): a FutureBuilder whose `future` is
+  // constructed fresh on every build restarts (goes back to `waiting`) on
+  // every rebuild — and rebuilds happen for reasons unrelated to auth,
+  // e.g. a locale or theme change calling notifyListeners(). That was
+  // tearing down RhythmaRoot (and whatever onboarding page the user was
+  // on) back to the splash screen, then to a brand new RhythmaRoot, every
+  // time onboarding's language step changed the locale.
+  late final Future<String?> _sessionFuture = AuthService().validateSession();
 
   @override
   Widget build(BuildContext context) {
@@ -92,7 +106,7 @@ class RhythmaApp extends StatelessWidget {
         // Confirms the stored token is still genuinely valid (not merely
         // present) via a lightweight /auth/me check, and scopes local
         // storage to the resulting account — see AuthService.validateSession.
-        future: AuthService().validateSession(),
+        future: _sessionFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const SplashScreen();

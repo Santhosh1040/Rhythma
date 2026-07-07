@@ -62,6 +62,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
   bool _notificationsEnabled = false;
   bool _dataConsent = false;
   String? _consentError;
+  String? _phoneError;
 
   late AnimationController _pageAnimController;
   late Animation<double> _pageFade;
@@ -118,6 +119,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
       _heightError = null;
       _weightError = null;
       _consentError = null;
+      _phoneError = null;
     });
 
     if (_currentPage == 1) {
@@ -144,6 +146,14 @@ class _OnboardingScreenState extends State<OnboardingScreen>
       return valid;
     }
 
+    if (_currentPage == 3) {
+      final digitsOnly = _phoneController.text.replaceAll(RegExp(r'[^0-9]'), '');
+      if (_phoneController.text.trim().isNotEmpty && (digitsOnly.length < 7 || digitsOnly.length > 15)) {
+        setState(() => _phoneError = 'Please enter a valid phone number');
+        return false;
+      }
+    }
+
     if (_currentPage == 4) {
       if (!_dataConsent) {
         setState(() => _consentError = l.onboardingDataConsentRequired);
@@ -160,10 +170,11 @@ class _OnboardingScreenState extends State<OnboardingScreen>
     if (_currentPage == 0) {
       // Apply language change immediately
       await LocalStorageService.setPreferredLanguage(_selectedLanguage);
-      if (mounted) {
-        context.read<LocaleProvider>().setLocale(Locale(_selectedLanguage));
-      }
+      if (!mounted) return;
+      context.read<LocaleProvider>().setLocale(Locale(_selectedLanguage));
     }
+
+    if (!mounted) return;
 
     if (_currentPage < _totalPages - 1) {
       _pageAnimController.reset();
@@ -172,6 +183,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
         duration: const Duration(milliseconds: 350),
         curve: Curves.easeInOutCubic,
       );
+      if (!mounted) return;
       setState(() => _currentPage++);
       _pageAnimController.forward();
     } else {
@@ -187,6 +199,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
         duration: const Duration(milliseconds: 350),
         curve: Curves.easeInOutCubic,
       );
+      if (!mounted) return;
       setState(() => _currentPage--);
       _pageAnimController.forward();
     }
@@ -635,6 +648,7 @@ class _OnboardingScreenState extends State<OnboardingScreen>
           _buildTextField(
             controller: _phoneController,
             label: l.onboardingPhoneLabel,
+            error: _phoneError,
             keyboardType: TextInputType.phone,
             textInputAction: TextInputAction.next,
           ),
@@ -930,4 +944,3 @@ class _OnboardingScreenState extends State<OnboardingScreen>
     );
   }
 }
-
