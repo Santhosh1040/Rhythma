@@ -4,10 +4,13 @@ import 'package:rhythma/l10n/app_localizations.dart';
 import '../../config/theme.dart';
 import '../../components/shared.dart';
 import '../../components/charts.dart';
+import '../../models/cycle_log.dart';
 import '../../providers/theme_provider.dart';
 import '../../providers/profile_provider.dart';
 import '../../services/api_client.dart';
+import '../../services/cycle_service.dart';
 import '../../services/local_storage_service.dart';
+import '../../utils/log_options.dart';
 import '../../utils/secure_storage.dart';
 import '../cycle/cycle_screen.dart';
 import '../insights/insights_screen.dart';
@@ -369,7 +372,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   label: l10n.homeLogFlow,
                   icon: Icons.water_drop_outlined,
                   color: RhythmaColors.rose,
-                  options: [l10n.logNone, l10n.logLight, l10n.logMedium, l10n.logHeavy],
+                  options: LogOptions.flow(l10n),
                 ),
               ),
               const SizedBox(width: 10),
@@ -382,7 +385,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   label: l10n.homeLogMood,
                   icon: Icons.favorite_border_rounded,
                   color: RhythmaColors.coral,
-                  options: const ['😊', '😐', '😔', '😤', '🥰'],
+                  options: LogOptions.mood,
                 ),
               ),
               const SizedBox(width: 10),
@@ -395,7 +398,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   label: l10n.homeLogSleep,
                   icon: Icons.bedtime_outlined,
                   color: RhythmaColors.primary,
-                  options: [l10n.logSleep1, l10n.logSleep2, l10n.logSleep3, l10n.logSleep4],
+                  options: LogOptions.sleep(l10n),
                 ),
               ),
               const SizedBox(width: 10),
@@ -408,7 +411,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   label: l10n.homeLogStress,
                   icon: Icons.air_rounded,
                   color: RhythmaColors.teal,
-                  options: [l10n.logEnergyLow, l10n.logEnergyMid, l10n.logEnergyHigh],
+                  options: LogOptions.stress(l10n),
                 ),
               ),
             ],
@@ -533,12 +536,40 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  /// Converts a LogOption's canonical string value into the type the
+  /// backend's CycleLog model expects for that field (numeric for
+  /// sleep_hours/stress_level, string otherwise).
+  dynamic _coerce(String field, String value) {
+    if (field == 'sleep_hours') return double.tryParse(value) ?? value;
+    if (field == 'stress_level') return int.tryParse(value) ?? value;
+    return value;
+  }
+
+  /// Wraps a single quick-logged field into a partial CycleLog for
+  /// `today`. The backend only merges the fields it's given, so this
+  /// doesn't clobber anything else already saved for today.
+  CycleLog _buildQuickLog(String field, dynamic value) {
+    final now = DateTime.now();
+    switch (field) {
+      case 'flow_intensity':
+        return CycleLog(startDate: now, flowIntensity: value as String);
+      case 'mood':
+        return CycleLog(startDate: now, mood: value as String);
+      case 'sleep_hours':
+        return CycleLog(startDate: now, sleepHours: value as double);
+      case 'stress_level':
+        return CycleLog(startDate: now, stressLevel: value as int);
+      default:
+        return CycleLog(startDate: now);
+    }
+  }
+
   void _showQuickLogSheet({
     required String field,
     required String label,
     required IconData icon,
     required Color color,
-    required List<String> options,
+    required List<LogOption> options,
   }) {
     showModalBottomSheet(
       context: context,
@@ -584,11 +615,33 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: options.map((opt) {
                   return GestureDetector(
                     onTap: () async {
-                      await LocalStorageService.saveQuickLogField(DateTime.now(), field, opt);
+                      // Local-first: this succeeds even offline.
+                      await LocalStorageService.saveQuickLogField(
+                          DateTime.now(), field, _coerce(field, opt.value));
                       if (ctx.mounted) Navigator.pop(ctx);
-                      if (mounted) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('$label logged: $opt')),
+                      if (!mounted) return;
+
+                      final messenger = ScaffoldMessenger.of(context);
+
+                      // Sync to the backend so /dashboard's real scoring has
+                      // data to work with. A connectivity failure just shows
+                      // a "saved locally" message — Firestore's offline-first
+                      // sync is what retries this once back online, not a
+                      // second queue here.
+                      try {
+                        await CycleService().submitLog(
+                          _buildQuickLog(field, _coerce(field, opt.value)),
+                        );
+                        messenger.showSnackBar(
+                          SnackBar(content: Text('$label logged: ${opt.label}')),
+                        );
+                        _fetchDashboardData();
+                      } catch (_) {
+                        messenger.showSnackBar(
+                          const SnackBar(
+                            content: Text(
+                                "Saved on this device — couldn't reach the server yet."),
+                          ),
                         );
                       }
                     },
@@ -600,7 +653,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         border: Border.all(color: RhythmaColors.border),
                       ),
                       child: Text(
-                        opt,
+                        opt.label,
                         style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600, color: RhythmaColors.foreground),
                       ),
                     ),
