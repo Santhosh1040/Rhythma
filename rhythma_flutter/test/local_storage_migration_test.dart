@@ -50,7 +50,7 @@ void main() {
     // ---------------------------------------------------------
     // 3. Verify the migrated data is intact and accessible
     // ---------------------------------------------------------
-    final secureStorage = const FlutterSecureStorage();
+    const secureStorage = FlutterSecureStorage();
     final keyString = await secureStorage.read(key: 'hive_key');
     expect(keyString, isNotNull, reason: 'Encryption key should have been generated');
 
