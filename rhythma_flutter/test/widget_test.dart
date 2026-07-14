@@ -10,6 +10,7 @@ import 'package:rhythma/providers/locale_provider.dart';
 import 'package:rhythma/providers/theme_provider.dart';
 import 'package:rhythma/providers/profile_provider.dart';
 import 'package:rhythma/screens/cycle/components/log_entry_sheet.dart';
+import 'test_helpers/platform_channel_mocks.dart';
 
 void main() {
   setUp(() {
@@ -347,5 +348,93 @@ void main() {
 
     // Sheet should be closed
     expect(find.text('Log your day'), findsNothing);
+  });
+
+  testWidgets(
+      '6. Cycle Tracking and Wellness Tips toggles show a confirmation '
+      'dialog and only change state when confirmed',
+      (WidgetTester tester) async {
+    await pumpProfileScreen(tester);
+
+    await tester.tap(find.text('App Settings'));
+    await tester.pumpAndSettle();
+
+    // Cycle Tracking Reminders defaults to ON.
+    final cycleSwitch =
+        find.widgetWithText(SwitchListTile, 'Cycle Tracking Reminders');
+    expect(tester.widget<SwitchListTile>(cycleSwitch).value, isTrue);
+
+    // Tapping it off should prompt for confirmation rather than flipping
+    // immediately.
+    await tester.tap(cycleSwitch);
+    await tester.pumpAndSettle();
+    expect(
+      find.text('Are you sure you want to turn OFF cycle tracking reminders?'),
+      findsOneWidget,
+    );
+
+    // Cancelling leaves the switch untouched.
+    await tester.tap(find.text('Cancel'));
+    await tester.pumpAndSettle();
+    expect(tester.widget<SwitchListTile>(cycleSwitch).value, isTrue);
+
+    // Confirming actually flips it.
+    await tester.tap(cycleSwitch);
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Confirm'));
+    await tester.pumpAndSettle();
+    expect(tester.widget<SwitchListTile>(cycleSwitch).value, isFalse);
+
+    // Wellness Tips defaults to OFF; same confirm flow turning it ON.
+    final wellnessSwitch = find.widgetWithText(SwitchListTile, 'Wellness Tips');
+    expect(tester.widget<SwitchListTile>(wellnessSwitch).value, isFalse);
+
+    await tester.tap(wellnessSwitch);
+    await tester.pumpAndSettle();
+    expect(
+      find.text('Are you sure you want to turn ON wellness tips?'),
+      findsOneWidget,
+    );
+    await tester.tap(find.text('Confirm'));
+    await tester.pumpAndSettle();
+    expect(tester.widget<SwitchListTile>(wellnessSwitch).value, isTrue);
+  });
+
+  testWidgets(
+      '7. Medicine Alerts toggle requests notification permission and '
+      'schedules/cancels the alert accordingly',
+      (WidgetTester tester) async {
+    // Medicine Alerts is the one toggle that talks to NotificationService
+    // (permission_handler + flutter_local_notifications), so we stub both
+    // plugins' platform channels first — see test_helpers for why.
+    mockNotificationPlatformChannels(permissionGranted: true);
+
+    await pumpProfileScreen(tester);
+    await tester.tap(find.text('App Settings'));
+    await tester.pumpAndSettle();
+
+    final medicineSwitch = find.widgetWithText(SwitchListTile, 'Medicine Alerts');
+    expect(tester.widget<SwitchListTile>(medicineSwitch).value, isTrue);
+
+    // Turn OFF: confirm dialog, then SettingsScreen cancels the pending
+    // local notification.
+    await tester.tap(medicineSwitch);
+    await tester.pumpAndSettle();
+    expect(
+      find.text('Are you sure you want to turn OFF medicine alerts?'),
+      findsOneWidget,
+    );
+    await tester.tap(find.text('Confirm'));
+    await tester.pumpAndSettle();
+    expect(tester.widget<SwitchListTile>(medicineSwitch).value, isFalse);
+
+    // Turn back ON: confirm dialog, then SettingsScreen requests
+    // notification permission and schedules a new alert. With the platform
+    // channels mocked as granted, this should complete without throwing.
+    await tester.tap(medicineSwitch);
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Confirm'));
+    await tester.pumpAndSettle();
+    expect(tester.widget<SwitchListTile>(medicineSwitch).value, isTrue);
   });
 }
