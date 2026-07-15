@@ -1165,6 +1165,8 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Please enter a valid weight (20–300 kg)'**
   String get onboardingWeightInvalid;
+
+  Null get insightsTrendDescription => null;
 }
 
 class _AppLocalizationsDelegate

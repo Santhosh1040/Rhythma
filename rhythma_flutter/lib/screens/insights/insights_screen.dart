@@ -47,14 +47,17 @@ class InsightsScreen extends StatelessWidget {
                 Positioned(
                   right: -30,
                   top: -30,
-                  child: Container(
-                    width: 160,
-                    height: 160,
-                    decoration: BoxDecoration(
-                      gradient: RhythmaGradients.primary,
-                      shape: BoxShape.circle,
-                    ),
-                  ).opacity(0.2),
+                  child: Opacity(
+                    opacity: 0.2,
+                    child: Container(
+                      width: 160,
+                      height: 160,
+                      decoration: BoxDecoration(
+                        gradient: RhythmaGradients.primary,
+                        shape: BoxShape.circle,
+                  ),
+                ),
+              ),
                 ),
                 Row(
                   children: [
@@ -264,6 +267,7 @@ class InsightsScreen extends StatelessWidget {
                     color: RhythmaColors.foreground,
                   ),
                 ),
+              
                 const SizedBox(height: 14),
                 _SymptomBar(l10n.logSympCramps, 0.70, RhythmaColors.rose),
                 const SizedBox(height: 12),
@@ -377,7 +381,7 @@ Widget build(BuildContext context) {
     ),
   );
 }
-} 
+}
 
 class _SymptomBar extends StatelessWidget {
   final String label;
@@ -437,7 +441,7 @@ class _Rec extends StatelessWidget {
          Container(
            width: 36,
            height: 36,
-            decoration: BoxDecoration(
+           decoration: BoxDecoration(
             color: color,
             shape: BoxShape.circle,
          ),
@@ -467,5 +471,4 @@ class _Rec extends StatelessWidget {
 }
 
 extension on Widget {
-  Widget opacity(double v) => Opacity(opacity: v, child: this);
 }
