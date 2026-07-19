@@ -565,6 +565,16 @@ class AppLocalizationsTa extends AppLocalizations {
       'தயவுசெய்து சரியான எடையை உள்ளிடவும் (20–300 கிகி)';
 
   @override
+  String get onboardingPhoneInvalid =>
+      'தயவுசெய்து சரியான தொலைபேசி எண்ணை உள்ளிடவும்';
+
+  @override
+  String get onboardingTapToSelectDate => 'தேதியைத் தேர்ந்தெடுக்க தட்டவும்';
+
+  @override
+  String get onboardingDays => 'நாட்கள்';
+
+  @override
   String get smsScreenTitle => 'எஸ்எம்எஸ் சுருக்கங்கள்';
 
   @override
@@ -646,4 +656,21 @@ class AppLocalizationsTa extends AppLocalizations {
   @override
   String get smsSummaryMessage =>
       '🌸 Rhythma சுகாதார சுருக்கம்\nஇது Rhythma-விலிருந்து உங்கள் உடனடி சுருக்கம்.\nஉங்கள் சமீபத்திய சுழற்சி தகவலுக்கு ஆப்பைத் திறக்கவும்.\nசந்தா நீக்க STOP என பதிலளிக்கவும்.';
+
+  @override
+  String insightsLoadError(String error) {
+    return 'உங்கள் நுண்ணறிவை ஏற்ற முடியவில்லை: $error';
+  }
+
+  @override
+  String get insightsNotEnoughData =>
+      'உங்கள் முழு சுகாதார நுண்ணறிவைத் திறக்க Cycle டேப்பில் இன்னும் சில சுழற்சிகளைப் பதிவு செய்யவும்.';
+
+  @override
+  String get insightsNoSymptomsYet =>
+      'இன்னும் அறிகுறிகள் எதுவும் பதிவு செய்யப்படவில்லை - Cycle டேப்பில் சிலவற்றைப் பதிவு செய்யவும்.';
+
+  @override
+  String get insightsNotEnoughTrendData =>
+      'உங்கள் போக்கைக் காண குறைந்தது இரண்டு சுழற்சிகளைப் பதிவு செய்யவும்.';
 }

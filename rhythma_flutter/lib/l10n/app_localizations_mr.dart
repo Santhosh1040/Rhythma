@@ -559,6 +559,15 @@ class AppLocalizationsMr extends AppLocalizations {
       'कृपया वैध वजन प्रविष्ट करा (20–300 किग्रा)';
 
   @override
+  String get onboardingPhoneInvalid => 'कृपया वैध फोन नंबर प्रविष्ट करा';
+
+  @override
+  String get onboardingTapToSelectDate => 'तारीख निवडण्यासाठी टॅप करा';
+
+  @override
+  String get onboardingDays => 'दिवस';
+
+  @override
   String get smsScreenTitle => 'एसएमएस सारांश';
 
   @override
@@ -636,4 +645,21 @@ class AppLocalizationsMr extends AppLocalizations {
   @override
   String get smsSummaryMessage =>
       '🌸 रिद्मा आरोग्य सारांश\nहा रिद्माकडून तुमचा ऑन-डिमांड सारांश आहे.\nतुमच्या नवीनतम चक्र माहितीसाठी अ‍ॅप उघडा.\nसदस्यता रद्द करण्यासाठी STOP उत्तर द्या.';
+
+  @override
+  String insightsLoadError(String error) {
+    return 'तुमची अंतर्दृष्टी लोड करता आली नाही: $error';
+  }
+
+  @override
+  String get insightsNotEnoughData =>
+      'तुमचे संपूर्ण आरोग्य अंतर्दृष्टी अनलॉक करण्यासाठी Cycle टॅबवर आणखी काही चक्र लॉग करा.';
+
+  @override
+  String get insightsNoSymptomsYet =>
+      'अद्याप कोणतीही लक्षणे लॉग केलेली नाहीत - Cycle टॅबवर काही लॉग करा.';
+
+  @override
+  String get insightsNotEnoughTrendData =>
+      'तुमचा ट्रेंड पाहण्यासाठी किमान दोन चक्र लॉग करा.';
 }

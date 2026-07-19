@@ -1166,6 +1166,24 @@ abstract class AppLocalizations {
   /// **'Please enter a valid weight (20–300 kg)'**
   String get onboardingWeightInvalid;
 
+  /// No description provided for @onboardingPhoneInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid phone number'**
+  String get onboardingPhoneInvalid;
+
+  /// No description provided for @onboardingTapToSelectDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap to select date'**
+  String get onboardingTapToSelectDate;
+
+  /// No description provided for @onboardingDays.
+  ///
+  /// In en, this message translates to:
+  /// **'days'**
+  String get onboardingDays;
+
   /// No description provided for @smsScreenTitle.
   ///
   /// In en, this message translates to:
@@ -1309,6 +1327,30 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'🌸 Rhythma Health Summary\nThis is your on-demand summary from Rhythma.\nOpen the app for your latest cycle insights.\nReply STOP to unsubscribe.'**
   String get smsSummaryMessage;
+
+  /// No description provided for @insightsLoadError.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t load your insights: {error}'**
+  String insightsLoadError(String error);
+
+  /// No description provided for @insightsNotEnoughData.
+  ///
+  /// In en, this message translates to:
+  /// **'Log a few more cycles on the Cycle tab to unlock your full health insights.'**
+  String get insightsNotEnoughData;
+
+  /// No description provided for @insightsNoSymptomsYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No symptoms logged yet — log some on the Cycle tab to see patterns here.'**
+  String get insightsNoSymptomsYet;
+
+  /// No description provided for @insightsNotEnoughTrendData.
+  ///
+  /// In en, this message translates to:
+  /// **'Log at least two cycles to see your trend here.'**
+  String get insightsNotEnoughTrendData;
 }
 
 class _AppLocalizationsDelegate

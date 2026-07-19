@@ -1,7 +1,7 @@
 {
   "@@locale": "en",
   "appTitle": "Rhythma",
-  "@appTitle": {"description": "The title of the application"},
+  "@appTitle": { "description": "The title of the application" },
   "settingsTitle": "Settings",
   "appPreferences": "App Preferences",
   "languagePreferences": "Language Preferences",
@@ -46,7 +46,7 @@
   "homeRetry": "Retry",
   "homeComingSoon": "Coming Soon",
   "homeUnderDevelopment": "{topic} is currently under development.",
-  "@homeUnderDevelopment": {"placeholders": {"topic": {"type": "String"}}},
+  "@homeUnderDevelopment": { "placeholders": { "topic": { "type": "String" } } },
   "homePrivacySecurity": "Privacy & Security",
   "homeOk": "OK",
   "cycleTrackerTitle": "Cycle Tracker",
@@ -179,6 +179,9 @@
   "onboardingAgeInvalid": "Please enter a valid age (10–120)",
   "onboardingHeightInvalid": "Please enter a valid height (50–250 cm)",
   "onboardingWeightInvalid": "Please enter a valid weight (20–300 kg)",
+  "onboardingPhoneInvalid": "Please enter a valid phone number",
+  "onboardingTapToSelectDate": "Tap to select date",
+  "onboardingDays": "days",
   "smsScreenTitle": "SMS Summaries",
   "smsScreenSubtitle": "Stay informed even without the app",
   "smsInfoCardTitle": "Weekly Health Summary",
@@ -202,5 +205,10 @@
   "smsErrorNetwork": "Couldn't reach the server. Check your connection and try again.",
   "smsErrorGeneric": "Something went wrong. Please try again.",
   "smsLoadError": "Couldn't load your SMS settings. Pull to refresh or try again.",
-  "smsSummaryMessage": "🌸 Rhythma Health Summary\nThis is your on-demand summary from Rhythma.\nOpen the app for your latest cycle insights.\nReply STOP to unsubscribe."
+  "smsSummaryMessage": "🌸 Rhythma Health Summary\nThis is your on-demand summary from Rhythma.\nOpen the app for your latest cycle insights.\nReply STOP to unsubscribe.",
+  "insightsLoadError": "Couldn't load your insights: {error}",
+  "@insightsLoadError": { "placeholders": { "error": { "type": "String" } } },
+  "insightsNotEnoughData": "Log a few more cycles on the Cycle tab to unlock your full health insights.",
+  "insightsNoSymptomsYet": "No symptoms logged yet — log some on the Cycle tab to see patterns here.",
+  "insightsNotEnoughTrendData": "Log at least two cycles to see your trend here."
 }

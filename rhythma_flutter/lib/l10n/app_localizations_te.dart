@@ -561,6 +561,16 @@ class AppLocalizationsTe extends AppLocalizations {
       'దయచేసి చెల్లుబాటు అయ్యే బరువు నమోదు చేయండి (20–300 కిలో)';
 
   @override
+  String get onboardingPhoneInvalid =>
+      'దయచేసి చెల్లుబాటు అయ్యే ఫోన్ నంబర్‌ను నమోదు చేయండి';
+
+  @override
+  String get onboardingTapToSelectDate => 'తేదీని ఎంచుకోవడానికి ట్యాప్ చేయండి';
+
+  @override
+  String get onboardingDays => 'రోజులు';
+
+  @override
   String get smsScreenTitle => 'ఎస్‌ఎంఎస్ సారాంశాలు';
 
   @override
@@ -641,4 +651,21 @@ class AppLocalizationsTe extends AppLocalizations {
   @override
   String get smsSummaryMessage =>
       '🌸 Rhythma ఆరోగ్య సారాంశం\nఇది Rhythma నుండి మీ ఆన్-డిమాండ్ సారాంశం.\nమీ తాజా చక్ర సమాచారం కోసం యాప్‌ను తెరవండి.\nసబ్‌స్క్రిప్షన్ రద్దు చేయడానికి STOP అని రిప్లై ఇవ్వండి.';
+
+  @override
+  String insightsLoadError(String error) {
+    return 'మీ విశ్లేషణలను లోడ్ చేయలేకపోయాము: $error';
+  }
+
+  @override
+  String get insightsNotEnoughData =>
+      'మీ పూర్తి ఆరోగ్య విశ్లేషణలను అన్లాక్ చేయడానికి Cycle ట్యాబ్‌లో మరికొన్ని చక్రాలను లాగ్ చేయండి.';
+
+  @override
+  String get insightsNoSymptomsYet =>
+      'ఇంకా లక్షణాలు ఏవీ లాగ్ చేయబడలేదు — Cycle ట్యాబ్‌లో కొన్నింటిని లాగ్ చేయండి.';
+
+  @override
+  String get insightsNotEnoughTrendData =>
+      'మీ ట్రెండ్ చూడటానికి కనీసం రెండు చక్రాలను లాగ్ చేయండి.';
 }

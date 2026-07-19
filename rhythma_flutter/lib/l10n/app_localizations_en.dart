@@ -558,6 +558,15 @@ class AppLocalizationsEn extends AppLocalizations {
       'Please enter a valid weight (20–300 kg)';
 
   @override
+  String get onboardingPhoneInvalid => 'Please enter a valid phone number';
+
+  @override
+  String get onboardingTapToSelectDate => 'Tap to select date';
+
+  @override
+  String get onboardingDays => 'days';
+
+  @override
   String get smsScreenTitle => 'SMS Summaries';
 
   @override
@@ -635,4 +644,21 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get smsSummaryMessage =>
       '🌸 Rhythma Health Summary\nThis is your on-demand summary from Rhythma.\nOpen the app for your latest cycle insights.\nReply STOP to unsubscribe.';
+
+  @override
+  String insightsLoadError(String error) {
+    return 'Couldn\'t load your insights: $error';
+  }
+
+  @override
+  String get insightsNotEnoughData =>
+      'Log a few more cycles on the Cycle tab to unlock your full health insights.';
+
+  @override
+  String get insightsNoSymptomsYet =>
+      'No symptoms logged yet — log some on the Cycle tab to see patterns here.';
+
+  @override
+  String get insightsNotEnoughTrendData =>
+      'Log at least two cycles to see your trend here.';
 }
