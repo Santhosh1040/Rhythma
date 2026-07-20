@@ -89,7 +89,7 @@ class AppLocalizationsTa extends AppLocalizations {
 
   @override
   String get homeAiSubtitle =>
-      'உங்கள் உடல் பற்றி என்னிடம் கேளுங்கள்,\nஉங்கள் மொழியில்.';
+      'உங்கள் உடல் பற்றி உங்கள் மொழியிலேயே என்னிடம் கேளுங்கள்.';
 
   @override
   String get homeAiPrompt => 'எனது மாதவிடாய் ஏன் ஒழுங்கற்றது?';
@@ -156,6 +156,15 @@ class AppLocalizationsTa extends AppLocalizations {
   String get homePrivacySecurity => 'Privacy & Security';
 
   @override
+  String get homeMhs => 'MHS';
+
+  @override
+  String get homeCvi => 'CVI';
+
+  @override
+  String get homeSleep => 'தூக்கம்';
+
+  @override
   String get homeOk => 'OK';
 
   @override
@@ -165,13 +174,13 @@ class AppLocalizationsTa extends AppLocalizations {
   String get cyclePhasePeriod => 'மாதவிடாய்';
 
   @override
-  String get cyclePhaseFollicular => 'நுண்ணறை';
+  String get cyclePhaseFollicular => 'ஃபோலிகுலர்';
 
   @override
-  String get cyclePhaseOvulation => 'அண்டவிடுப்பின்';
+  String get cyclePhaseOvulation => 'அண்டவிடுப்பு';
 
   @override
-  String get cyclePhaseLuteal => 'லூட்டல்';
+  String get cyclePhaseLuteal => 'லூட்டியல்';
 
   @override
   String get logFor => 'பதிவு';
@@ -210,13 +219,13 @@ class AppLocalizationsTa extends AppLocalizations {
   String get logSleep4 => '9+ மணிநேரம்';
 
   @override
-  String get logSympCramps => 'தசைப்பிடிப்பு';
+  String get logSympCramps => 'மாதவிடாய் வலி';
 
   @override
   String get logSympHeadache => 'தலைவலி';
 
   @override
-  String get logSympBloating => 'வீக்கம்';
+  String get logSympBloating => 'வயிறு வீக்கம்';
 
   @override
   String get logSympAcne => 'முகப்பரு';
@@ -256,6 +265,231 @@ class AppLocalizationsTa extends AppLocalizations {
 
   @override
   String get logSympBackPain => 'Back Pain';
+
+  @override
+  String get homeErrorNetwork =>
+      'இணைய இணைப்பைச் சரிபார்த்து மீண்டும் முயற்சிக்கவும்.';
+
+  @override
+  String get homeErrorAuth =>
+      'உங்கள் அமர்வு காலாவதியாகிவிட்டது. மீண்டும் உள்நுழையவும்.';
+
+  @override
+  String get homeErrorServer =>
+      'எங்கள் பக்கம் ஏதோ தவறு நடந்தது. பின்னர் மீண்டும் முயற்சிக்கவும்.';
+
+  @override
+  String get homeErrorGeneric =>
+      'தரவை ஏற்ற முடியவில்லை. மீண்டும் முயற்சிக்கவும்.';
+
+  @override
+  String homeQuickLogTitle(String label) {
+    return '$label பதிவு செய்யுங்கள்';
+  }
+
+  @override
+  String homeQuickLogSaved(String label, String value) {
+    return '$label பதிவு செய்யப்பட்டது: $value';
+  }
+
+  @override
+  String get loginWelcomeBack => 'மீண்டும் வரவேற்கிறோம்';
+
+  @override
+  String get loginSubtitle =>
+      'உங்கள் தனிப்பட்ட ரித்மா பயணத்தைத் தொடர உள்நுழையவும்.';
+
+  @override
+  String get loginUsername => 'பயனர்பெயர்';
+
+  @override
+  String get loginPassword => 'கடவுச்சொல்';
+
+  @override
+  String get loginShowPassword => 'கடவுச்சொல்லைக் காட்டு';
+
+  @override
+  String get loginHidePassword => 'கடவுச்சொல்லை மறை';
+
+  @override
+  String get loginLoggingIn => 'உள்நுழைகிறது...';
+
+  @override
+  String get loginButton => 'உள்நுழை';
+
+  @override
+  String get loginNoAccount => 'கணக்கு இல்லையா? பதிவு செய்யுங்கள்';
+
+  @override
+  String get loginFieldsRequired =>
+      'உங்கள் பயனர்பெயர் மற்றும் கடவுச்சொல்லை உள்ளிடவும்.';
+
+  @override
+  String get loginErrorNetwork =>
+      'இணைய இணைப்பைச் சரிபார்த்து மீண்டும் முயற்சிக்கவும்.';
+
+  @override
+  String get loginErrorInvalidCredentials =>
+      'தவறான பயனர்பெயர் அல்லது கடவுச்சொல்.';
+
+  @override
+  String get loginErrorGeneric =>
+      'உள்நுழைவு தோல்வியடைந்தது. மீண்டும் முயற்சிக்கவும்.';
+
+  @override
+  String get registerTitle => 'கணக்கை உருவாக்கு';
+
+  @override
+  String get registerSubtitle =>
+      'உங்கள் ரித்மா உதவியாளருக்கு பாதுகாப்பான அணுகலை அமைக்கவும்.';
+
+  @override
+  String get registerFullName => 'முழு பெயர் (விரும்பினால்)';
+
+  @override
+  String get registerEmail => 'மின்னஞ்சல்';
+
+  @override
+  String get registerUsernameHelper =>
+      '6-30 எழுத்துகள்: எழுத்துகள், எண்கள், அண்டர்ஸ்கோர்';
+
+  @override
+  String get registerAge => 'வயது';
+
+  @override
+  String get registerAgeHelper => '10 மற்றும் 120 க்கு இடையில்';
+
+  @override
+  String get registerCycleLength => 'சராசரி சுழற்சி நீளம் (நாட்கள்)';
+
+  @override
+  String get registerCycleHelper => '15 மற்றும் 45 நாட்களுக்கு இடையில்';
+
+  @override
+  String get registerPasswordHelper => 'குறைந்தது 8 எழுத்துகள்';
+
+  @override
+  String get registerCreating => 'கணக்கை உருவாக்குகிறது...';
+
+  @override
+  String get registerButton => 'பதிவு செய்';
+
+  @override
+  String get registerHaveAccount => 'ஏற்கனவே கணக்கு உள்ளதா? உள்நுழை';
+
+  @override
+  String get registerSuccess =>
+      'கணக்கு வெற்றிகரமாக உருவாக்கப்பட்டது! உள்நுழையவும்.';
+
+  @override
+  String get registerErrorNetwork =>
+      'இணைய இணைப்பைச் சரிபார்த்து மீண்டும் முயற்சிக்கவும்.';
+
+  @override
+  String get registerErrorConflict =>
+      'இந்த பயனர்பெயர் அல்லது மின்னஞ்சலுடன் கணக்கு ஏற்கனவே உள்ளது.';
+
+  @override
+  String get registerErrorGeneric =>
+      'பதிவு தோல்வியடைந்தது. மீண்டும் முயற்சிக்கவும்.';
+
+  @override
+  String get registerEmailRequired => 'மின்னஞ்சல் அவசியம்';
+
+  @override
+  String get registerEmailInvalid => 'சரியான மின்னஞ்சல் முகவரியை உள்ளிடவும்';
+
+  @override
+  String get registerPasswordRequired => 'கடவுச்சொல் அவசியம்';
+
+  @override
+  String get registerPasswordTooShort =>
+      'கடவுச்சொல் குறைந்தது 8 எழுத்துகள் இருக்க வேண்டும்';
+
+  @override
+  String get registerUsernameRequired => 'பயனர்பெயர் அவசியம்';
+
+  @override
+  String get registerUsernameTooShort =>
+      'பயனர்பெயர் குறைந்தது 6 எழுத்துகள் இருக்க வேண்டும்';
+
+  @override
+  String get registerUsernameTooLong => 'பயனர்பெயர் 30 எழுத்துகளை மீறக்கூடாது';
+
+  @override
+  String get registerUsernameInvalid =>
+      'பயனர்பெயரில் எழுத்துகள், எண்கள் மற்றும் அண்டர்ஸ்கோர்கள் மட்டுமே இருக்கலாம்';
+
+  @override
+  String get registerAgeInvalid => 'சரியான வயதை உள்ளிடவும்';
+
+  @override
+  String get registerAgeRange =>
+      'வயது 10 மற்றும் 120 க்கு இடையில் இருக்க வேண்டும்';
+
+  @override
+  String get registerCycleInvalid => 'சரியான சராசரி சுழற்சி நீளத்தை உள்ளிடவும்';
+
+  @override
+  String get registerCycleRange =>
+      'சுழற்சி நீளம் 15 மற்றும் 45 நாட்களுக்கு இடையில் இருக்க வேண்டும்';
+
+  @override
+  String settingsConfirmTurnOn(String feature) {
+    return '$feature அம்சத்தை இயக்க விரும்புகிறீர்களா?';
+  }
+
+  @override
+  String settingsConfirmTurnOff(String feature) {
+    return '$feature அம்சத்தை அணைக்க விரும்புகிறீர்களா?';
+  }
+
+  @override
+  String get settingsConfirm => 'உறுதிப்படுத்து';
+
+  @override
+  String get settingsTestNotification => 'இப்போது அறிவிப்பை சோதி';
+
+  @override
+  String get settingsTestNotificationDesc => 'உடனடி எச்சரிக்கை அனுப்புகிறது';
+
+  @override
+  String get settingsTestNotificationTitle => 'ரித்மா சோதனை';
+
+  @override
+  String get settingsTestNotificationBody =>
+      'நேட்டிவ் அறிவிப்புகள் சரியாக வேலை செய்கின்றன!';
+
+  @override
+  String get settingsMedicineReminderTitle => 'மருந்து நினைவூட்டல்';
+
+  @override
+  String get settingsMedicineReminderBody =>
+      'உங்கள் இரும்புச் சத்து துணை எடுக்கும் நேரம்!';
+
+  @override
+  String get settingsThemeColor => 'தீம் நிறம்';
+
+  @override
+  String get profileNameRequired => 'பெயர் காலியாக இருக்கக்கூடாது';
+
+  @override
+  String get profileAgeInvalid =>
+      'வயது 10 மற்றும் 120 க்கு இடையில் இருக்க வேண்டும்';
+
+  @override
+  String get profileCycleInvalid =>
+      'சுழற்சி நீளம் 15 மற்றும் 45 நாட்களுக்கு இடையில் இருக்க வேண்டும்';
+
+  @override
+  String get profilePhoneInvalid =>
+      'சரியான தொலைபேசி எண்ணை உள்ளிடவும் (குறைந்தது 8 இலக்கங்கள்)';
+
+  @override
+  String get cycleToday => 'இன்று';
+
+  @override
+  String get assistantError => 'ஏதோ தவறு நடந்தது. மீண்டும் முயற்சிக்கவும்.';
 
   @override
   String get assistantTitle => 'ரித்மா உதவியாளர்';
@@ -310,7 +544,7 @@ class AppLocalizationsTa extends AppLocalizations {
   String get insightsModerate => 'மிதமான';
 
   @override
-  String get insightsTrendLabel => 'சுழற்சி நீளத்தின் போக்கு';
+  String get insightsTrendLabel => 'சுழற்சி காலப்போக்கு';
 
   @override
   String get insightsStabilizing => 'சீரடைகிறது';
@@ -413,19 +647,19 @@ class AppLocalizationsTa extends AppLocalizations {
       'அவசரத் தொடர்புகள் எதுவும் இன்னும் அமைக்கப்படவில்லை.';
 
   @override
-  String get navHome => 'ஹோம்';
+  String get navHome => 'முகப்பு';
 
   @override
-  String get navCycle => 'சைக்கிள்';
+  String get navCycle => 'சுழற்சி';
 
   @override
-  String get navAsk => 'ஆஸ்க்';
+  String get navAsk => 'கேள்வி';
 
   @override
-  String get navInsights => 'உள்நோக்குகள்';
+  String get navInsights => 'நுண்ணறிவுகள்';
 
   @override
-  String get navYou => 'யூ';
+  String get navYou => 'நீங்கள்';
 
   @override
   String get settingsHelpSupport => 'உதவி மற்றும் ஆதரவு';
@@ -548,7 +782,7 @@ class AppLocalizationsTa extends AppLocalizations {
 
   @override
   String get onboardingDataConsentLabel =>
-      'இந்த சாதனத்தில் என் சுகாதார தரவை உள்ளூரில் சேமிக்க ஒப்புகிறேன்';
+      'எனது சுகாதாரத் தரவுகளை இந்தச் சாதனத்திலேயே பாதுகாப்பாகச் சேமிக்க சம்மதிக்கிறேன்';
 
   @override
   String get onboardingDataConsentRequired => 'தொடர ஏற்றுக்கொள்ளவும்';
